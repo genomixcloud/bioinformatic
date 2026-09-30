@@ -27,3 +27,7 @@ https://benlangmead.github.io/aws-indexes/
 
 Teaching documentation:
 https://www.langmead-lab.org/teaching.html
+
+
+
+https://zenodo.org/records/4066768/files/db.tar.gz

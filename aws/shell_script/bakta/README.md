@@ -13,3 +13,5 @@ bakta_db download --output <output-path> --type [light|full]
 bakta_db download --output /mnt/efs/ --type light
 
 db-light +> you can rename  your dir 
+
+r5.2xlarge para evitar un kill por memory 
