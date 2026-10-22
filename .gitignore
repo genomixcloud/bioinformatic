@@ -4,3 +4,5 @@
 .idea/
 logs
 /logs/*.log
+# Claude Code
+.claude/
