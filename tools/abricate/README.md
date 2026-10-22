@@ -65,7 +65,9 @@ A tab-separated table with one line per gene found, with the columns `FILE`, `SE
 
 No setup is needed: the databases are downloaded and indexed when the image is built. To get newer versions of the databases, rebuild the image (see [Build and test the image](#build-and-test-the-image)).
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying ABRicate on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

@@ -82,7 +82,9 @@ Roary writes its results to `pangenome`:
 
 Roary doesn't need a database.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying Roary on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

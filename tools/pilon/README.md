@@ -103,7 +103,9 @@ To also get a file listing every change Pilon made, add `--changes`.
 
 Pilon doesn't need a database.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying Pilon on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

@@ -52,7 +52,9 @@ No setup is needed: the database is downloaded when the image is built and regis
 
 To use a different copy of the database, download it from the [CheckM databases](https://data.ace.uq.edu.au/public/CheckM_databases/), mount it into the container (for example on `/checkm_db`) and run `checkm data setRoot /checkm_db` before your CheckM command in the same container.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying CheckM on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

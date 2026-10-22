@@ -58,7 +58,9 @@ FimTyper writes its result files, with the FimH type found, to the output folder
 
 No setup is needed: the database is cloned from the [fimtyper_db repository](https://bitbucket.org/genomicepidemiology/fimtyper_db) when the image is built. To get a newer version, rebuild the image.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying FimTyper on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

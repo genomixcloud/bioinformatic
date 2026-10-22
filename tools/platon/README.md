@@ -81,7 +81,9 @@ mv db platon_db
 
 ref: [Platon database download](https://github.com/oschwengers/platon?tab=readme-ov-file#database-download)
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying Platon on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

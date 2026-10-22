@@ -57,7 +57,9 @@ SPAdes writes its results to `data_out`:
 
 SPAdes doesn't need a database.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying SPAdes on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

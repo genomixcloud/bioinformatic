@@ -71,7 +71,9 @@ To choose where the reports go, add `-h data_out/fastp.html -j data_out/fastp.js
 
 fastp doesn't need a database.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying fastp on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

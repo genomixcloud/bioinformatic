@@ -101,7 +101,9 @@ To set up the database on an AWS EC2 instance, see [aws/database-setup/bakta](..
 
 ref: [bakta database download](https://github.com/oschwengers/bakta/blob/main/README.md#database-download)
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying Bakta on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

@@ -66,7 +66,9 @@ No setup is needed: the databases are indexed when the image is built.
 
 If you face any problem with tbl2asn (you shouldn't), you can find the appropriate tbl2asn release in the [binaries folder](../../binaries/README_tbl2asn.md).
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying Prokka on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

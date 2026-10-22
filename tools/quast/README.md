@@ -69,7 +69,9 @@ QUAST writes its results to `data_out`:
 
 QUAST doesn't need a database.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying QUAST on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

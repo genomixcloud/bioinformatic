@@ -64,7 +64,9 @@ For each input file, FastQC writes to `data_out`:
 
 FastQC doesn't need a database.
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying FastQC on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

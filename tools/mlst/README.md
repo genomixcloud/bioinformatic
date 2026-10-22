@@ -55,7 +55,9 @@ Don't use `-t` (`-ti`) when you redirect the output to a file: it mixes the log 
 
 No setup is needed: the PubMLST schemes and BLAST database come with the mlst release installed in the image. To get newer schemes, rebuild the image with a newer mlst version (`MlstVer` in the Dockerfile).
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying mlst on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 

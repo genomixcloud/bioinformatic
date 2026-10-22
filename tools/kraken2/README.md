@@ -89,7 +89,9 @@ The image also includes `kraken2-build` to build your own database:
 docker run --name kraken2-build --rm -ti genomixcloud/kraken2 kraken2-build --help
 ```
 
-## Run on AWS
+## AWS deployment ideas
+
+These are ideas for deploying Kraken2 on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
 ### Architecture
 
