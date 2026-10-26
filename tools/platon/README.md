@@ -130,7 +130,7 @@ For contributors and developers.
 
 ```shell
 cd tools/platon
-docker build -t genomixcloud/platon:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/platon:my_version .
 ```
 
 ### Test

@@ -106,7 +106,7 @@ For contributors and developers.
 
 ```shell
 cd tools/fimtyper
-docker build -t genomixcloud/fimtyper:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/fimtyper:my_version .
 ```
 
 ### Test

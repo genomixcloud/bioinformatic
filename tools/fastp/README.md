@@ -119,7 +119,7 @@ For contributors and developers.
 
 ```shell
 cd tools/fastp
-docker build -t genomixcloud/fastp:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/fastp:my_version .
 ```
 
 ### Test

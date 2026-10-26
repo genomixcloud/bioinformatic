@@ -112,7 +112,7 @@ For contributors and developers.
 
 ```shell
 cd tools/fastqc
-docker build -t genomixcloud/fastqc:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/fastqc:my_version .
 ```
 
 ### Test

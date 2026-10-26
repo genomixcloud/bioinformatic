@@ -130,7 +130,7 @@ For contributors and developers.
 
 ```shell
 cd tools/roary
-docker build --build-arg DEBIAN_FRONTEND=noninteractive -t genomixcloud/roary:my_version .
+docker build --platform=linux/amd64 --build-arg DEBIAN_FRONTEND=noninteractive -t genomixcloud/roary:my_version .
 ```
 
 `DEBIAN_FRONTEND=noninteractive` stops the build from asking for a timezone.

@@ -151,7 +151,7 @@ For contributors and developers.
 
 ```shell
 cd tools/pilon
-docker build -t genomixcloud/pilon:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/pilon:my_version .
 ```
 
 ### Test

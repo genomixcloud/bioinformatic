@@ -98,7 +98,7 @@ For contributors and developers.
 
 ```shell
 cd tools/checkm
-docker build -t genomixcloud/checkm:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/checkm:my_version .
 ```
 
 The build downloads the CheckM database (around 1.4GB uncompressed) into the image.

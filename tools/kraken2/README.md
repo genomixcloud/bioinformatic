@@ -144,7 +144,7 @@ For contributors and developers.
 
 ```shell
 cd tools/kraken2
-docker build -t genomixcloud/kraken2:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/kraken2:my_version .
 ```
 
 ### Test

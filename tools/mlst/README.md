@@ -102,7 +102,7 @@ For contributors and developers.
 
 ```shell
 cd tools/mlst
-docker build -t genomixcloud/mlst:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/mlst:my_version .
 ```
 
 ### Test

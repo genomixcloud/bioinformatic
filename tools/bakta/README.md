@@ -131,7 +131,7 @@ For contributors and developers.
 
 ```shell
 cd tools/bakta
-docker build -t genomixcloud/bakta:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/bakta:my_version .
 ```
 
 ### Test

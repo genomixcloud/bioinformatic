@@ -114,7 +114,7 @@ For contributors and developers.
 
 ```shell
 cd tools/prokka
-docker build --build-arg DEBIAN_FRONTEND=noninteractive -t genomixcloud/prokka:my_version .
+docker build --platform=linux/amd64 --build-arg DEBIAN_FRONTEND=noninteractive -t genomixcloud/prokka:my_version .
 ```
 
 `DEBIAN_FRONTEND=noninteractive` stops the build from asking for a timezone.

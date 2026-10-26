@@ -113,7 +113,7 @@ For contributors and developers.
 
 ```shell
 cd tools/abricate
-docker build -t genomixcloud/abricate:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/abricate:my_version .
 ```
 
 ### Test

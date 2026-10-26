@@ -105,7 +105,7 @@ For contributors and developers.
 
 ```shell
 cd tools/spades
-docker build -t genomixcloud/spades:my_version .
+docker build --platform=linux/amd64 -t genomixcloud/spades:my_version .
 ```
 
 The SPAdes release used by the Dockerfile is also stored in the [binaries folder](../../binaries) of this repo.
