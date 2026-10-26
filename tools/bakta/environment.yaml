@@ -7,3 +7,4 @@ dependencies:
   - ncbi-amrfinderplus>=3.11.2
   - python=3.10
   - bakta=1.11.4
+  - pyhmmer=0.11.3

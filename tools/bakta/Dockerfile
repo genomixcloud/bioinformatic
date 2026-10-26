@@ -15,9 +15,10 @@ RUN bash Miniconda3-latest-Linux-x86_64.sh -b
 # adding path to call conda
 ENV PATH=/root/miniconda3/bin:${PATH}
 
-RUN conda tos accept --override-channels --channel defaults \
- && conda tos accept --override-channels --channel bioconda \
- && conda tos accept --override-channels --channel conda-forge
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    conda tos accept --override-channels --channel conda-forge && \
+    conda tos accept --override-channels --channel bioconda
 
 RUN conda update -y conda
 RUN conda config --add channels defaults && \
