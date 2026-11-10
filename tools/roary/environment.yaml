@@ -1,7 +1,17 @@
+# Source spec for roary_env. The image is NOT built from this file: it is built
+# from roary_env.lock.txt, the exact package list, so every build gets the same
+# packages. Use this file only to regenerate the lock (see README "Update the
+# conda lock"), then check the result before replacing the lock.
 name: roary_env
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
+  # main tools: keep these exact versions
   - roary=3.13.0
+  - fasttree=2.2.0
+  # needed by roary2svg.pl (SVG.pm); no other package pulls it in
+  - perl-svg=2.87
+  # keeps the solver on the same stack as the 26 Oct 2026 image
+  - python=3.7
