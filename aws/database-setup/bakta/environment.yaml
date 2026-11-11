@@ -1,3 +1,6 @@
+# Bakta environment for the EC2 installation. Keep it the same as
+# tools/bakta/environment.yaml, so the instance and the Docker image install
+# the same Bakta, pyhmmer and Python versions.
 name: bakta_env
 channels:
   - conda-forge
@@ -7,3 +10,4 @@ dependencies:
   - ncbi-amrfinderplus>=3.11.2
   - python=3.10
   - bakta=1.11.4
+  - pyhmmer=0.11.3

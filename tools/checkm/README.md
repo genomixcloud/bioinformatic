@@ -5,7 +5,7 @@ A ready-to-run Linux Docker image of [CheckM](https://github.com/Ecogenomics/Che
 | | |
 |---|---|
 | **Image** | [`genomixcloud/checkm`](https://hub.docker.com/r/genomixcloud/checkm) |
-| **Tool version** | CheckM from pip at build time (the Dockerfile declares 1.2.4, see [Troubleshooting](#troubleshooting)) |
+| **Tool version** | CheckM 1.2.5 |
 | **Platform** | `linux/amd64` |
 | **Database** | Included in the image: CheckM data release 2015-01-16, about 1.4 GB |
 | **Input → output** | Genomes or bins (FASTA) → completeness, contamination and strain heterogeneity |
@@ -40,8 +40,8 @@ docker run --rm genomixcloud/checkm \
 | Component | Version | Notes |
 |-----------|---------|-------|
 | Base image | Ubuntu 22.04 (jammy) | |
-| CheckM (`checkm-genome`) | latest on PyPI at build time | Not pinned |
-| numpy, matplotlib, pysam | latest on PyPI at build time | Not pinned |
+| CheckM (`checkm-genome`) | 1.2.5 | From PyPI, pinned. The Dockerfile used to declare 1.2.4 but installed the latest release; 1.2.5 is the version in the image of 23 Oct 2026 |
+| numpy, matplotlib, pysam, scipy | 2.2.6, 3.10.9, 0.24.1, 1.15.3 | From PyPI, pinned to the versions of the 23 Oct 2026 image |
 | pplacer | v1.1.alpha19 | Used by the `tree` step |
 | HMMER, Prodigal | Ubuntu 22.04 packages | |
 | CheckM database | release 2015-01-16 | In `/data/checkm_db`, registered with `checkm data setRoot` |
@@ -145,8 +145,9 @@ The build downloads the CheckM database (about 1.4 GB uncompressed) into the ima
 | File | Content |
 |------|---------|
 | `Dockerfile` | Ubuntu 22.04 image with CheckM (pip), pplacer, HMMER, Prodigal and the CheckM database |
-| `src/checkm.sh` | Template script, copied to `/src` in the image: runs `taxonomy_wf`, `tree`, `tree_qa` and `gc_plot` with the variables set in `checkm.ini` |
-| `conf/checkm.ini` | Configuration template, copied to `/conf` in the image, for the input and output folders |
+| `src/checkm.sh` | Script, copied to `/src` in the image: runs `taxonomy_wf`, `tree`, `tree_qa` and `gc_plot` with the settings in `/conf/checkm.ini` (an environment variable with the same name overrides each one) |
+| `test.sh` | Smoke test, run by `make test`: checks the CheckM version and runs the test genome of the database |
+| `conf/checkm.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input and output folders |
 
 ## Troubleshooting
 
@@ -156,10 +157,7 @@ The build downloads the CheckM database (about 1.4 GB uncompressed) into the ima
 | The `tree` step is killed | pplacer ran out of memory. Give Docker more memory or add `--reduced_tree` |
 | No genomes found | Set `-x` to the extension of your files (`fasta`, `fa`, `fna`) |
 
-Known issues in the image, not fixed yet:
-
-* **The CheckM version isn't pinned.** The Dockerfile declares `CHECKM_VER="1.2.4"` but doesn't use it: `pip install checkm-genome` installs the latest release, and numpy, matplotlib and pysam aren't pinned either. Two builds on different dates can contain different versions. Run `checkm` (without arguments) to see the version in your image.
-* `src/checkm.sh` is a template: the variables it uses aren't read from `conf/checkm.ini` yet.
+No known issues in the image at the moment.
 
 ## Citation
 

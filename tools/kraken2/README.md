@@ -119,11 +119,22 @@ Useful options:
 
 ## Database setup
 
-* **For testing:** the [MiniKraken2 database](https://genome-idx.s3.amazonaws.com/kraken/minikraken2_v2_8GB_201904.tgz) (8 GB).
-* **For real analyses:** the Kraken2 Standard database. See [How to create Kraken2 Standard (v2.1.3) DB in AWS](https://github.com/ldipotetjob/kraken2/tree/kraken2aws_profilingfromv2.1.3/docs/awsStandardDB#readme).
-* **On an AWS EC2 instance:** see [aws/database-setup/kraken2](../../aws/database-setup/kraken2).
+**Download a prebuilt database instead of building one.** The Langmead lab builds the common Kraken2 databases and publishes them ready to use at **[benlangmead.github.io/aws-indexes/k2](https://benlangmead.github.io/aws-indexes/k2)**. On that page, use the section **Kraken2 + Bracken**, table **Latest: <month> <year> update**: each row is a database with its download link (HTTPS URL), its checksum (MD5), and its archive and index sizes. The archives also contain the files that Bracken needs.
 
-The image also includes `kraken2-build` to build your own database:
+| Database | Index size (22 Oct 2026 release) | Use |
+|----------|----------------------------------|-----|
+| **Standard** (RefSeq archaea, bacteria, viral, plasmid, human, UniVec_Core) | 109.4 GiB | **Real analyses** |
+| **Standard-16** (Standard capped at 16 GB) | 14.9 GiB | Good balance between size and accuracy |
+| **Standard-8** (Standard capped at 8 GB) | 7.5 GiB | Testing, or machines with little memory |
+| PlusPF, PlusPFP and their -8 / -16 versions | 7.5 to 270 GiB | Samples that may also contain protozoa, fungi or plants |
+
+The databases are **updated about every 3 to 4 months**. Each release has its date in the file names (for example `k2_standard_20261022.tar.gz`), and the previous releases move to the section *Old Kraken2 + Bracken* of the same page. Always copy the URL from the page, and write down the release you use: results from different releases aren't directly comparable.
+
+* **On an AWS EC2 instance, to AWS EFS:** step by step, with the checksum check, in [aws/database-setup/kraken2](../../aws/database-setup/kraken2).
+* **For a quick local test:** the 8 GB MiniKraken2 database of the [Quick start](#quick-start), from 2019 (section *Old Minikraken*), or the current Standard-8.
+* Notes on building the Standard database on AWS yourself: [How to create Kraken2 Standard (v2.1.3) DB in AWS](https://github.com/ldipotetjob/kraken2/tree/kraken2aws_profilingfromv2.1.3/docs/awsStandardDB#readme).
+
+The image also includes `kraken2-build`, if you really need to build your own database (for example with your own genomes):
 
 ```shell
 docker run --rm genomixcloud/kraken2 kraken2-build --help
@@ -193,8 +204,9 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | File | Content |
 |------|---------|
 | `Dockerfile` | Ubuntu 22.04 image with Kraken2 (built from source), BLAST+ and rsync |
-| `src/kraken2.sh` | Template script, copied to `/src` in the image: calls `kraken2` with the variables set in `kraken.ini` |
-| `conf/kraken.ini` | Configuration template, copied to `/conf` in the image, for the input reads, database and output folder |
+| `src/kraken2.sh` | Script, copied to `/src` in the image: calls `kraken2` with the settings in `/conf/kraken.ini` (an environment variable with the same name overrides each one) |
+| `conf/kraken.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input reads, database and output folder |
+| `test.sh` | Smoke test, run by `make test`: checks the Kraken2 version, `kraken2-build` and BLAST+ |
 
 ## Troubleshooting
 
@@ -207,7 +219,6 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 
 Known issues in the image, not fixed yet:
 
-* `src/kraken2.sh` is a template: the variables it uses aren't read from `conf/kraken.ini` yet. Its header comment still says "pilon's skeleton".
 * The Dockerfile sets `LC_ALL=C` to override the locale, which isn't recommended (see the comment in the Dockerfile).
 
 ## Citation

@@ -178,7 +178,8 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | `Dockerfile` | Ubuntu 20.04 image with Miniconda and the `bakta_env` conda environment |
 | `environment.yaml` | Conda environment: Bakta, AMRFinderPlus, pyhmmer and Python |
 | `src/bakta.sh` | Entrypoint, copied to `/src` in the image: activates the conda environment and calls `bakta` with the given arguments |
-| `conf/bakta.ini` | Configuration template for the S3 input and output folders. It isn't copied into the image yet |
+| `conf/bakta.ini` | Configuration template for the S3 input and output folders, copied to `/conf` in the image |
+| `test.sh` | Smoke test, run by `make test`: checks the Bakta version, that `bakta` is on the `PATH` without activating the environment, AMRFinderPlus and `/conf` |
 
 ## Troubleshooting
 
@@ -188,10 +189,15 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | Bakta stops at the start with a database error | `--db` must point to the folder that contains the database files (`db` or `db-light`), as seen inside the container |
 | The run is slow | Set `--threads` to the number of CPUs you gave Docker |
 
-Known issues in the image, not fixed yet:
+### Builds can change over time (by choice)
 
-* **Builds aren't reproducible.** The Dockerfile installs `Miniconda3-latest`, runs `conda update`, and `environment.yaml` pins only some packages (AMRFinderPlus has only a minimum version). Two builds of the same Dockerfile on different dates can contain different versions. The [Roary](../roary#reproducible-builds) image solves the same problem with an exact conda lock.
-* `ENV PATH` points to `/opt/conda/envs/bakta_env/bin`, which doesn't exist; the environment is in `/root/miniconda3/envs/bakta_env`. `/src/bakta.sh` activates the environment, so it works, but calling `bakta` directly without activating it doesn't.
+The Dockerfile installs `Miniconda3-latest`, runs `conda update`, and `environment.yaml` pins only Bakta 1.11.4, pyhmmer 0.11.3 and Python 3.10. AMRFinderPlus has only a minimum version, and the other dependencies are resolved by conda at build time. So two builds of the same Dockerfile on different dates can contain different versions of the supporting tools; Bakta itself is always 1.11.4.
+
+We keep it this way **on purpose** in this public repository: the Dockerfile and `environment.yaml` stay short and easy to read and change, which matters more for most users than byte-identical rebuilds. If you need exactly the same image for a study:
+
+* **Use a published image by its tag or digest** instead of rebuilding it, and write down the digest.
+* **Record the versions in your image** with `conda list -n bakta_env` and `amrfinder --version`. `make test` prints the AMRFinderPlus version.
+* **Freeze your own build** if you need to rebuild it: export the environment with `conda list -n bakta_env --explicit > bakta_env.lock.txt` and create it from that file, as the [Roary](../roary#reproducible-builds) image does.
 
 ## Citation
 

@@ -1,15 +1,17 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 ARG PROKKA_VER="1.14.6"
 ARG BEDTOOLS_VER="2.29.0"
 ARG BARRNAP_VER="0.9"
+# BLAST+ stays at 2.9.0, the version of the previous image, so results don't change
 ARG BLAST_VER="2.9.0"
 
 # so that apt/tzdata doesn't ask for user input for a timezone
-ARG DEBIAN_FRONTEND
+ARG DEBIAN_FRONTEND=noninteractive
 
 # install dependencies
 RUN apt-get update && apt-get -y --no-install-recommends install \
+ ca-certificates \
  bzip2 \
  gzip \
  wget \
@@ -18,22 +20,32 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
  libdatetime-perl \
  libxml-simple-perl \
  libdigest-md5-perl \
- default-jre \
+ default-jre-headless \
  bioperl \
+ libbio-searchio-hmmer-perl \
  hmmer \
  zlib1g-dev \
- python \
+ python3 \
+ python-is-python3 \
  liblzma-dev \
  libbz2-dev \
  xz-utils \
  curl \
  g++ \
  cpanminus \
- make \
- libidn11 && \
+ faketime \
+ make && \
  apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
-# install bedtools 2.29.0 since >=2.27.0 is required for barrnap and the apt-get package is 2.25.0
+# tbl2asn needs libidn.so.11, which Ubuntu 22.04 no longer packages (it has libidn12):
+# install the Ubuntu 20.04 package, checked with its SHA-256
+ARG LIBIDN11_DEB="libidn11_1.33-2.2ubuntu2_amd64.deb"
+ARG LIBIDN11_SHA256="15dbad793f52b7a271f7d2c9d3566a9c98a7ba5ae315b52414006fc8c6a910f9"
+RUN wget -q http://archive.ubuntu.com/ubuntu/pool/main/libi/libidn/${LIBIDN11_DEB} && \
+    echo "${LIBIDN11_SHA256}  ${LIBIDN11_DEB}" | sha256sum -c - && \
+    dpkg -i ${LIBIDN11_DEB} && rm ${LIBIDN11_DEB}
+
+# install bedtools 2.29.0 since >=2.27.0 is required for barrnap
 # dependencies required for bedtools: zlib1g-dev python liblzma-dev libbz2-dev xz-utils curl g++
 RUN wget https://github.com/arq5x/bedtools2/releases/download/v${BEDTOOLS_VER}/bedtools-${BEDTOOLS_VER}.tar.gz && \
   tar -zxf bedtools-${BEDTOOLS_VER}.tar.gz && \
@@ -57,10 +69,15 @@ RUN wget https://github.com/tseemann/prokka/archive/v${PROKKA_VER}.tar.gz && \
     rm -rf v${PROKKA_VER}.tar.gz && \
     mkdir /data
 
+# tbl2asn 25.6 stops working once it is more than a year old, so Prokka fails at its
+# last step (GenBank files). /usr/bin/tbl2asn runs the real binary with a fixed date
+# (faketime), the same workaround as the bioconda package tbl2asn-forever.
+ARG TBL2ASN_DATE="2019-01-01"
 RUN wget https://anaconda.org/bioconda/tbl2asn/25.6/download/linux-64/tbl2asn-25.6-3.tar.bz2 && \
 tar -jxvf tbl2asn-25.6-3.tar.bz2 bin/tbl2asn && \
 mv bin/tbl2asn /usr/bin/real-tbl2asn && \
-cp /usr/bin/real-tbl2asn /usr/bin/tbl2asn && \
+printf '#!/bin/bash\nexec faketime "%s" /usr/bin/real-tbl2asn "$@"\n' "${TBL2ASN_DATE}" > /usr/bin/tbl2asn && \
+chmod +x /usr/bin/tbl2asn && \
 rm tbl2asn-25.6-3.tar.bz2
 
 # install blast binaries directly from NCBI FTP

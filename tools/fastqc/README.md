@@ -46,9 +46,9 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind \
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Base image | Ubuntu 18.04 | |
+| Base image | Ubuntu 22.04 | |
 | FastQC | 0.12.1 | From the Babraham Bioinformatics download page |
-| Java | Ubuntu 18.04 `default-jre` | Needed by FastQC |
+| Java | Ubuntu 22.04 `default-jre-headless` (OpenJDK 11) | Needed by FastQC |
 
 ## Requirements
 
@@ -154,9 +154,10 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 
 | File | Content |
 |------|---------|
-| `Dockerfile` | Ubuntu 18.04 image with Java and FastQC |
-| `src/fastqc.sh` | Template script, copied to `/src` in the image: calls `fastqc` with the variables set in `fastqc.ini` |
-| `conf/fastqc.ini` | Configuration template, copied to `/conf` in the image, for the input reads and output folder |
+| `Dockerfile` | Ubuntu 22.04 image with Java and FastQC |
+| `test.sh` | Smoke test, run by `make test`: checks the FastQC version and writes a report |
+| `src/fastqc.sh` | Script, copied to `/src` in the image: calls `fastqc` with the settings in `/conf/fastqc.ini` (an environment variable with the same name overrides each one) |
+| `conf/fastqc.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input reads and output folder |
 
 ## Troubleshooting
 
@@ -165,10 +166,7 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | `Specified output directory ... does not exist` | Create the output folder before running |
 | Java runs out of memory with many files | Lower `-t`: each file processed at the same time uses about 250 MB |
 
-Known issues in the image, not fixed yet:
-
-* `src/fastqc.sh` is a template: the variables it uses aren't read from `conf/fastqc.ini` yet.
-* Ubuntu 18.04 is no longer supported by Ubuntu.
+No known issues in the image at the moment.
 
 ## Citation
 

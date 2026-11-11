@@ -32,7 +32,8 @@ RUN conda env create --quiet -f /src/environment.yaml
 
 ## RUN source activate bakta_env
 RUN echo "source activate bakta_env" > ~/.bashrc
-ENV PATH /opt/conda/envs/bakta_env/bin:$PATH
+ENV PATH="/root/miniconda3/envs/bakta_env/bin:${PATH}"
+COPY ./conf/* /conf/
 COPY ./src/* /src/
 WORKDIR /data
 CMD ["/bin/bash", "-c"]

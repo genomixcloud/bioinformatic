@@ -1,10 +1,14 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 # For easy upgrade later. ARG varibles only persist during docker image build time
+ARG DEBIAN_FRONTEND=noninteractive
 ARG ABRIcateVer="1.0.1"
+# any2fasta has no tag for its current version (0.9.0): pin the commit in the 23 Oct 2026 image
+ARG ANY2FASTA_COMMIT="70ba375452568dc005102aadd95064ec8b8dbdc1"
 
 # install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
   bioperl \
+  ca-certificates \
   gzip \
   unzip \
   liblist-moreutils-perl \
@@ -22,18 +26,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # get any2fasta
 RUN cd /usr/local/bin && \
-  wget https://raw.githubusercontent.com/tseemann/any2fasta/master/any2fasta && \
+  wget -q https://raw.githubusercontent.com/tseemann/any2fasta/${ANY2FASTA_COMMIT}/any2fasta && \
   chmod +x any2fasta
 
 # download abricate
-RUN wget https://github.com/tseemann/abricate/archive/v${ABRIcateVer}.tar.gz && \
-    tar -zxvf v${ABRIcateVer}.tar.gz && \
+RUN wget -q https://github.com/tseemann/abricate/archive/v${ABRIcateVer}.tar.gz && \
+    tar -zxf v${ABRIcateVer}.tar.gz && \
     rm -rf v${ABRIcateVer}.tar.gz && \
     mkdir /data && mkdir /src && mkdir /conf
 
 # set $PATH
 ENV PATH="${PATH}:/abricate-${ABRIcateVer}/bin"
 
+# index the databases bundled with this ABRicate release (no download)
 RUN abricate --setupdb
 
 COPY ./conf/* /conf/

@@ -175,8 +175,8 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | File | Content |
 |------|---------|
 | `Dockerfile` | Ubuntu 20.04 image with Miniconda and Platon (from bioconda) |
-| `src/platon.sh` | Template script, copied to `/src` in the image: calls `platon` with the variables set in `platon.ini` |
-| `conf/platon.ini` | Configuration template, copied to `/conf` in the image, for the input file, database and output folder |
+| `src/platon.sh` | Script, copied to `/src` in the image: calls `platon` with the settings in `/conf/platon.ini` (an environment variable with the same name overrides each one) |
+| `conf/platon.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input file, database and output folder |
 
 ## Troubleshooting
 
@@ -185,10 +185,15 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | `diamond execution failed! diamond-error-code=-11` | Not enough memory. Give Docker or the AWS Batch job at least 24 GB |
 | Platon can't find the database | `--db` must point to the extracted database folder (`platon_db`), as seen inside the container |
 
-Known issues in the image, not fixed yet:
+### Builds can change over time (by choice)
 
-* **Builds aren't reproducible.** The Dockerfile installs `Miniconda3-latest`, and only Platon is pinned: its dependencies are resolved by conda at build time, in the base environment. Two builds on different dates can contain different versions. The [Roary](../roary#reproducible-builds) image solves the same problem with an exact conda lock.
-* `src/platon.sh` is a template: the variables it uses aren't read from `conf/platon.ini` yet. The header comments of the script and of `conf/platon.ini` were copied from SPAdes and QUAST and still name those tools.
+The Dockerfile installs `Miniconda3-latest` and pins only Platon 1.7. Its dependencies (DIAMOND, BLAST+, HMMER, INFERNAL, MUMmer, Prodigal) are resolved by conda at build time, in the base environment. So two builds on different dates can contain different versions of those tools; Platon itself is always 1.7. For example, the image built on 23 Oct 2026 has DIAMOND 2.2.8 and BLAST+ 2.17.0.
+
+We keep it this way **on purpose** in this public repository: the Dockerfile stays short and easy to read and change, which matters more for most users than byte-identical rebuilds. If you need exactly the same image for a study:
+
+* **Use a published image by its tag or digest** instead of rebuilding it, and write down the digest.
+* **Record the versions in your image** with `conda list`. `make test` prints the DIAMOND and BLAST+ versions.
+* **Freeze your own build** if you need to rebuild it: export the environment with `conda list --explicit > platon_env.lock.txt` and create it from that file, as the [Roary](../roary#reproducible-builds) image does.
 
 ## Citation
 

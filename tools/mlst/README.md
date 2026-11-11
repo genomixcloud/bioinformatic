@@ -148,8 +148,9 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | File | Content |
 |------|---------|
 | `Dockerfile` | Ubuntu 20.04 image with mlst, BLAST+ and any2fasta |
-| `src/mlst.sh` | Template script, copied to `/src` in the image: calls `mlst` with the variables set in `mlst.ini` |
-| `conf/mlst.ini` | Configuration template, copied to `/conf` in the image, for the input file and output folder |
+| `src/mlst.sh` | Script, copied to `/src` in the image: calls `mlst` with the settings in `/conf/mlst.ini` (an environment variable with the same name overrides each one) |
+| `conf/mlst.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input file and output folder |
+| `test.sh` | Smoke test, run by `make test`: checks the mlst version, the schemes and a run on a FASTA |
 
 ## Troubleshooting
 
@@ -158,9 +159,7 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | The output file has log messages or Windows line endings | Don't use `-t` (`-ti`) in `docker run` when you redirect the output to a file. Add `--quiet` |
 | The scheme column is `-` | No scheme matched. Check the species, or set it with `--scheme` |
 
-Known issues in the image, not fixed yet:
-
-* `src/mlst.sh` is a template: the variables it uses aren't read from `conf/mlst.ini` yet. The header comments of the script and of `conf/mlst.ini` were copied from SPAdes and QUAST and still name those tools.
+No known issues in the image at the moment.
 
 ## Citation
 

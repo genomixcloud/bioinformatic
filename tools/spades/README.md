@@ -44,9 +44,9 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind \
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Base image | Ubuntu 18.04 | |
+| Base image | Ubuntu 20.04 | The prebuilt SPAdes 3.15.5 binaries crash (segmentation fault) on Ubuntu 22.04 |
 | SPAdes | 3.15.5 | Prebuilt Linux binaries from the GitHub release. A copy is in [binaries](../../binaries) |
-| Python | 2.7 (Ubuntu 18.04) | Runs `spades.py` |
+| Python | 3.8 (Ubuntu 20.04) | Runs `spades.py`. `python-is-python3` provides the `python` command |
 
 ## Requirements
 
@@ -150,9 +150,10 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 
 | File | Content |
 |------|---------|
-| `Dockerfile` | Ubuntu 18.04 image with Python and the prebuilt SPAdes binaries |
-| `src/spades.sh` | Template script, copied to `/src` in the image: calls `spades.py` with the variables set in `spades.ini` |
-| `conf/spades.ini` | Configuration template, copied to `/conf` in the image, for the input reads and output folder |
+| `Dockerfile` | Ubuntu 20.04 image with Python 3 and the prebuilt SPAdes binaries |
+| `test.sh` | Smoke test, run by `make test`: checks the SPAdes and Python versions and runs the SPAdes self-test |
+| `src/spades.sh` | Script, copied to `/src` in the image: calls `spades.py` with the settings in `/conf/spades.ini` (an environment variable with the same name overrides each one) |
+| `conf/spades.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input reads and output folder |
 
 ## Troubleshooting
 
@@ -164,9 +165,7 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 
 Known issues in the image, not fixed yet:
 
-* SPAdes runs on Python 2.7, which is no longer supported.
-* `src/spades.sh` is a template: the variables it uses aren't read from `conf/spades.ini` yet.
-* Ubuntu 18.04 is no longer supported by Ubuntu.
+* Ubuntu 20.04 is past its standard support. The prebuilt SPAdes 3.15.5 binaries crash on Ubuntu 22.04, so moving further needs SPAdes built from source or a newer SPAdes release, which would change the main tool version.
 
 ## Citation
 

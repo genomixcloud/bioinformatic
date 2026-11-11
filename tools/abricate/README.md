@@ -7,7 +7,7 @@ A ready-to-run Linux Docker image of [ABRicate](https://github.com/tseemann/abri
 | **Image** | [`genomixcloud/abricate`](https://hub.docker.com/r/genomixcloud/abricate) |
 | **Tool version** | ABRicate 1.0.1 |
 | **Platform** | `linux/amd64` |
-| **Database** | Included in the image (downloaded at build time) |
+| **Database** | Included in the image: the databases bundled with ABRicate 1.0.1 |
 | **Input → output** | Contigs (FASTA, GenBank or EMBL) → table of genes found (TSV) |
 | **Pipeline step** | After assembly ([SPAdes](../spades), [Pilon](../pilon)) |
 
@@ -46,12 +46,12 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind \
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Base image | Ubuntu 18.04 | |
+| Base image | Ubuntu 22.04 | |
 | ABRicate | 1.0.1 | From the GitHub release `v1.0.1` |
-| BLAST+ | Ubuntu 18.04 package (`ncbi-blast+`) | |
-| any2fasta | latest from `master` | Converts GenBank and EMBL input to FASTA |
-| BioPerl and Perl modules | Ubuntu 18.04 packages | |
-| ABRicate databases | as on the build date | Set up with `abricate --setupdb` when the image is built |
+| BLAST+ | 2.12.0 (Ubuntu 22.04 package `ncbi-blast+`) | Was 2.6.0 on Ubuntu 18.04; results on the test data are identical |
+| any2fasta | 0.9.0 (commit `70ba375`) | Converts GenBank and EMBL input to FASTA. Pinned to a commit: 0.9.0 has no release tag |
+| BioPerl and Perl modules | Ubuntu 22.04 packages | |
+| ABRicate databases | as bundled with ABRicate 1.0.1 | ncbi, card, resfinder, argannot, vfdb, ecoli_vf, plasmidfinder, megares, ecoh. `abricate --setupdb` only indexes them; it downloads nothing |
 
 ## Requirements
 
@@ -107,7 +107,7 @@ A tab-separated table with one line per gene found, with these columns:
 
 ## Database setup
 
-No setup is needed: the databases are downloaded and indexed when the image is built. To get newer versions of the databases, rebuild the image (see [Build and test](#build-and-test)).
+No setup is needed: the databases bundled with ABRicate 1.0.1 are indexed when the image is built (`abricate --setupdb`), so every build has the same databases. To get newer databases, use `abricate-get_db` in your own image, and record the date: results then depend on it.
 
 ## Running on AWS
 
@@ -163,9 +163,10 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 
 | File | Content |
 |------|---------|
-| `Dockerfile` | Ubuntu 18.04 image with ABRicate, BLAST+, any2fasta and the ABRicate databases |
-| `src/abricate.sh` | Template script, copied to `/src` in the image: calls `abricate` with the variables set in `abricate.ini` |
-| `conf/abricate.ini` | Configuration template, copied to `/conf` in the image, for the input file, database and output folder |
+| `Dockerfile` | Ubuntu 22.04 image with ABRicate, BLAST+, any2fasta and the ABRicate databases |
+| `test.sh` | Smoke test, run by `make test`: checks the ABRicate and any2fasta versions, the dependencies and the 9 databases |
+| `src/abricate.sh` | Script, copied to `/src` in the image: calls `abricate` with the settings in `/conf/abricate.ini` (an environment variable with the same name overrides each one) |
+| `conf/abricate.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input file, database and output folder |
 
 ## Troubleshooting
 
@@ -174,11 +175,7 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | The output file has log messages or Windows line endings | Don't use `-t` (`-ti`) in `docker run` when you redirect the output to a file |
 | No genes found | Check the database with `--db` and lower `--minid` or `--mincov` if needed |
 
-Known issues in the image, not fixed yet:
-
-* **The databases and any2fasta depend on the build date.** `abricate --setupdb` downloads the current databases, and any2fasta is taken from `master`. Two builds on different dates can give different results. Write down the build date of the image you use for a study.
-* `src/abricate.sh` is a template: the variables it uses (`$contig_fasta`, `$database`, `$DATA_OUT`) aren't read from `conf/abricate.ini` yet.
-* Ubuntu 18.04 is no longer supported by Ubuntu.
+No known issues in the image at the moment.
 
 ## Citation
 

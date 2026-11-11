@@ -47,8 +47,8 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind genomixcloud/fastp f
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Base image | Ubuntu 18.04 | |
-| fastp | 1.0.1 | Prebuilt binary from `opengene.org` |
+| Base image | Ubuntu 22.04 | |
+| fastp | 1.0.1 | Prebuilt binary from `opengene.org`, downloaded over `https` and checked with its SHA-256 |
 
 ## Requirements
 
@@ -160,9 +160,10 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 
 | File | Content |
 |------|---------|
-| `Dockerfile` | Ubuntu 18.04 image with the prebuilt fastp binary |
-| `src/fastp.sh` | Template script, copied to `/src` in the image: calls `fastp` with the variables set in `fastp.ini` |
-| `conf/fastp.ini` | Configuration template, copied to `/conf` in the image, for the input reads and output folder |
+| `Dockerfile` | Ubuntu 22.04 image with the prebuilt fastp binary |
+| `test.sh` | Smoke test, run by `make test`: checks the fastp version and trims a few reads |
+| `src/fastp.sh` | Script, copied to `/src` in the image: calls `fastp` with the settings in `/conf/fastp.ini` (an environment variable with the same name overrides each one) |
+| `conf/fastp.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input reads and output folder |
 
 ## Troubleshooting
 
@@ -171,11 +172,7 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | `ERROR: Failed to write` or no output file | Create the output folder before running: fastp doesn't create it |
 | The reports aren't in the output folder | Add `-h` and `-j` with paths in the output folder |
 
-Known issues in the image, not fixed yet:
-
-* The fastp binary is downloaded over plain `http` from `opengene.org`, without a checksum check.
-* `src/fastp.sh` is a template: the variables it uses aren't read from `conf/fastp.ini` yet.
-* Ubuntu 18.04 is no longer supported by Ubuntu.
+No known issues in the image at the moment.
 
 ## Citation
 

@@ -45,10 +45,10 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind \
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Base image | Ubuntu 18.04 | |
+| Base image | Ubuntu 22.04 | |
 | QUAST | 5.2.0 | From the GitHub release, installed with `setup.py install` |
-| Python | 2.7 (Ubuntu 18.04) | With matplotlib, simplejson and joblib from Ubuntu packages |
-| Java | Ubuntu 18.04 `default-jdk` | |
+| Python | 3.10 (Ubuntu 22.04) | With matplotlib, simplejson and joblib from Ubuntu packages. `python-is-python3` provides the `python` command |
+| Java | Ubuntu 22.04 `default-jre-headless` | |
 
 ## Requirements
 
@@ -158,9 +158,10 @@ docker build --platform=linux/amd64 --build-arg DEBIAN_FRONTEND=noninteractive -
 
 | File | Content |
 |------|---------|
-| `Dockerfile` | Ubuntu 18.04 image with Python, Java and QUAST |
-| `src/quast.sh` | Template script, copied to `/src` in the image: calls `quast.py` with the variables set in `quast.ini` |
-| `conf/quast.ini` | Configuration template, copied to `/conf` in the image, for the input files and output folder |
+| `Dockerfile` | Ubuntu 22.04 image with Python 3, Java and QUAST |
+| `test.sh` | Smoke test, run by `make test`: checks the QUAST and Python versions and assesses a small assembly |
+| `src/quast.sh` | Script, copied to `/src` in the image: calls `quast.py` with the settings in `/conf/quast.ini` (an environment variable with the same name overrides each one) |
+| `conf/quast.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the input files and output folder |
 
 ## Troubleshooting
 
@@ -170,11 +171,7 @@ docker build --platform=linux/amd64 --build-arg DEBIAN_FRONTEND=noninteractive -
 | Misassemblies and genome fraction are missing | They need a reference genome: add `-r` |
 | Short contigs aren't counted | QUAST ignores contigs shorter than 500 bp. Change it with `-m` |
 
-Known issues in the image, not fixed yet:
-
-* QUAST runs on Python 2.7, which is no longer supported. QUAST 5.2.0 also runs on Python 3.
-* `src/quast.sh` is a template: the variables it uses aren't read from `conf/quast.ini` yet. Its header comment was copied from SPAdes and still names that tool.
-* Ubuntu 18.04 is no longer supported by Ubuntu.
+No known issues in the image at the moment. On the test data of this repo, the QUAST report is identical to the one of the previous image (Ubuntu 18.04, Python 2.7).
 
 ## Citation
 

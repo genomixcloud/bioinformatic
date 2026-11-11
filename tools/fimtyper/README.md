@@ -5,9 +5,9 @@ A ready-to-run Linux Docker image of [FimTyper](https://bitbucket.org/genomicepi
 | | |
 |---|---|
 | **Image** | [`genomixcloud/fimtyper`](https://hub.docker.com/r/genomixcloud/fimtyper) |
-| **Tool version** | FimTyper from the `master` branch at build time (image label `0.0.1-a.0`) |
+| **Tool version** | FimTyper commit `311023b` (10 Mar 2022; image label `0.0.1-a.0`) |
 | **Platform** | `linux/amd64` |
-| **Database** | Included in the image (cloned at build time) |
+| **Database** | Included in the image: fimtyper_db commit `820782c` (27 Jul 2023) |
 | **Input → output** | *E. coli* assembly (FASTA) → FimH type |
 | **Pipeline step** | After assembly ([SPAdes](../spades), [Pilon](../pilon)), next to [mlst](../mlst) for typing |
 
@@ -46,8 +46,8 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind \
 | Component | Version | Notes |
 |-----------|---------|-------|
 | Base image | Ubuntu 20.04 | |
-| FimTyper | `master` branch at build time | `git clone --depth=1`, no release tag |
-| FimTyper database | `master` branch at build time | In `/usr/local/fimtyper/fimtyper_db` |
+| FimTyper | commit `311023be5c2c` (10 Mar 2022) | No release tags: pinned with `FIMTYPER_COMMIT` in the Dockerfile |
+| FimTyper database | commit `820782c9dd73` (27 Jul 2023) | In `/usr/local/fimtyper/fimtyper_db`. Pinned with `FIMTYPER_DB_COMMIT`. Upstream has two newer monthly updates |
 | BLAST+ | Ubuntu 20.04 package (`ncbi-blast+`) | `src/update_blast-ver.sh` can add another version next to it |
 | Perl and modules | Ubuntu 20.04 Perl, modules installed with cpanm | Installed by `src/tmp_brew.sh` |
 
@@ -85,7 +85,7 @@ FimTyper writes its result files, with the FimH type found and the alignment of 
 
 ## Database setup
 
-No setup is needed: the database is cloned from the [fimtyper_db repository](https://bitbucket.org/genomicepidemiology/fimtyper_db) when the image is built. To get a newer version, rebuild the image.
+No setup is needed: the database is cloned from the [fimtyper_db repository](https://bitbucket.org/genomicepidemiology/fimtyper_db) at the pinned commit when the image is built. To use a newer version, change `FIMTYPER_DB_COMMIT` in the Dockerfile and rebuild; results can then change.
 
 ## Running on AWS
 
@@ -145,6 +145,7 @@ Then run the [Quick start](#quick-start) with your `my_version` tag. `make push`
 | `src/tmp_brew.sh` | Installs cpanm and the FimTyper Perl dependencies when the image is built |
 | `src/update_blast-ver.sh` | Installs a specific BLAST+ version in `/usr/local/fimtyper/` (default 2.14.0, see [Note.md](Note.md)) |
 | `conf/fimtyper.ini` | Configuration template for the FimTyper parameters. It isn't copied into the image yet |
+| `test.sh` | Smoke test, run by `make test`: checks the pinned commits and types the test genome |
 | `Note.md` | Notes on how the image was made and the improvements planned |
 
 The scripts in `src/` are copied to `/usr/local/fimtyper` in the image, not to `/src`.
@@ -158,8 +159,6 @@ The scripts in `src/` are copied to `/usr/local/fimtyper` in the image, not to `
 
 Known issues in the image, not fixed yet:
 
-* **FimTyper and its database aren't pinned.** Both are cloned from their `master` branch, so two builds on different dates can contain different code and alleles. Write down the build date of the image you use for a study.
-* `src/tmp_brew.sh` downloads the perlbrew installer over plain `http`.
 * Planned in [Note.md](Note.md): a multi-stage build to make the image smaller, and a non-root user.
 
 ## Citation

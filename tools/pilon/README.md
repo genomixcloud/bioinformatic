@@ -30,7 +30,7 @@ A ready-to-run Linux Docker image of [Pilon](https://github.com/broadinstitute/p
 ```shell
 # Pull the image and check the versions
 docker pull genomixcloud/pilon
-docker run --rm genomixcloud/pilon bash pilon --help
+docker run --rm genomixcloud/pilon pilon --help
 docker run --rm genomixcloud/pilon bwa-mem2 version
 docker run --rm genomixcloud/pilon samtools --help
 ```
@@ -41,11 +41,11 @@ Pilon needs the reads aligned to the assembly first, so the example with the tes
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Base image | Ubuntu 18.04 | |
+| Base image | Ubuntu 22.04 | |
 | Pilon | 1.24 | Java JAR from the GitHub release, with a `pilon` launcher in `/usr/src/pilon` |
 | bwa-mem2 | 2.2.1 | Prebuilt binary from the GitHub release |
 | samtools | 1.9 | Built from source |
-| Java | OpenJDK 8 | |
+| Java | OpenJDK 8 (headless) | |
 
 ## Requirements
 
@@ -115,7 +115,7 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind \
 
 ```shell
 docker run --rm --mount src="$(pwd)",target=/data,type=bind \
-  genomixcloud/pilon bash pilon --genome /data/data_fasta/contigs.fasta \
+  genomixcloud/pilon pilon --genome /data/data_fasta/contigs.fasta \
   --bam /data/data_out/sample.sort.bam \
   --outdir /data/data_out/ --output assembly.polish --threads 8 --minqual 30 --nostrays
 ```
@@ -183,7 +183,7 @@ For contributors and developers. From the root of the repository:
 
 ```shell
 make build DOCKER_IMAGE=pilon DOCKER_TAG=my_version
-docker run --rm pilon:my_version bash pilon --help
+docker run --rm pilon:my_version pilon --help
 docker run --rm pilon:my_version bwa-mem2 version
 docker run --rm pilon:my_version samtools --help
 ```
@@ -201,24 +201,23 @@ Then run the steps in [Usage](#usage) with your `my_version` tag. `make push` an
 
 | File | Content |
 |------|---------|
-| `Dockerfile` | Ubuntu 18.04 image with Java 8, Pilon, bwa-mem2 and samtools (built from source) |
-| `src/pilon.sh` | Template script, copied to `/src` in the image: runs bwa-mem2, samtools and Pilon with the variables set in `pilon.ini` |
-| `conf/pilon.ini` | Configuration template, copied to `/conf` in the image, for the assembly, reads and output folder |
+| `Dockerfile` | Ubuntu 22.04 image with Java 8, Pilon, bwa-mem2 and samtools (built from source) |
+| `test.sh` | Smoke test, run by `make test`: checks the Pilon, bwa-mem2 and samtools versions |
+| `src/pilon.sh` | Script, copied to `/src` in the image: runs bwa-mem2, samtools and Pilon with the settings in `/conf/pilon.ini` (an environment variable with the same name overrides each one) |
+| `conf/pilon.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the assembly, reads and output folder |
 
 ## Troubleshooting
 
 | Problem | Cause and fix |
 |---------|---------------|
-| `exec format error` or `permission denied` when running `pilon` | Call it as `bash pilon` (see below) |
+| `bash pilon` in old scripts | Still works. Images built before 11 Nov 2026 need it, because their launcher has no `#!/bin/bash` line |
+| `Please verify that both the operating system and the processor support Intel(R) CLWB instructions` from bwa-mem2 | The CPU check of bwa-mem2 fails under emulation, for example Docker on Apple silicon. On x86 machines and AWS it works. Locally you can call `/usr/src/bwa/bwa-mem2.sse41` directly |
 | Pilon is killed or Java reports `OutOfMemoryError` | Give Docker more memory. Large genomes need several GB |
 | `samtools` or `pilon` can't find the BAM index | Run steps 4 and 5: Pilon needs a sorted and indexed BAM |
 
 Known issues in the image, not fixed yet:
 
-* **The `pilon` launcher has no `#!/bin/bash` line**, so Docker can't run it directly: call it as `bash pilon`. In the Dockerfile, the `#!/bin/bash` line is written to `./pilon` in the build folder instead of `/usr/src/pilon/pilon`.
-* `src/pilon.sh` is a template: the variables it uses aren't read from `conf/pilon.ini` yet. It writes to `$DATA_OUT/pilon/`, which must exist.
 * The Broad Institute no longer develops Pilon. 1.24 is its last release.
-* Ubuntu 18.04 is no longer supported by Ubuntu.
 
 ## Citation
 

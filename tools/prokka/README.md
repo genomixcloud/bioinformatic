@@ -42,13 +42,13 @@ docker run --rm --mount src="$(pwd)",target=/data,type=bind \
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| Base image | Ubuntu 18.04 | |
+| Base image | Ubuntu 22.04 | |
 | Prokka | 1.14.6 | From the GitHub release `v1.14.6`. Includes Prodigal, Aragorn and the other binaries that come with it |
 | BLAST+ | 2.9.0 | From the NCBI FTP |
 | barrnap | 0.9 | rRNA prediction |
-| bedtools | 2.29.0 | Built from source. barrnap needs 2.27.0 or later, and Ubuntu 18.04 only has 2.25.0 |
-| tbl2asn | 25.6 | From bioconda. Older copies are in [binaries](../../binaries/README_tbl2asn.md) |
-| HMMER, BioPerl, Java | Ubuntu 18.04 packages | |
+| bedtools | 2.29.0 | Built from source. barrnap needs 2.27.0 or later |
+| tbl2asn | 25.6 | From bioconda. Runs under `faketime` with the date 2019-01-01, because this release stops working when it's more than a year old. Needs `libidn11`, installed from the Ubuntu 20.04 package. Older copies are in [binaries](../../binaries/README_tbl2asn.md) |
+| HMMER, BioPerl, Java | Ubuntu 22.04 packages | BioPerl's HMMER3 parser comes from `libbio-searchio-hmmer-perl` |
 | Prokka databases | as included in Prokka 1.14.6 | Indexed with `prokka --setupdb` at build time |
 
 ## Requirements
@@ -161,22 +161,23 @@ docker build --platform=linux/amd64 --build-arg DEBIAN_FRONTEND=noninteractive -
 
 | File | Content |
 |------|---------|
-| `Dockerfile` | Ubuntu 18.04 image with Prokka, BLAST+ 2.9.0, barrnap, bedtools and tbl2asn |
+| `Dockerfile` | Ubuntu 22.04 image with Prokka, BLAST+ 2.9.0, barrnap, bedtools and tbl2asn |
+| `test.sh` | Smoke test, run by `make test`: checks the Prokka and BLAST+ versions and annotates a 20 kb sequence (GFF and GenBank) |
 | `src/prokka.sh` | Entrypoint, copied to `/src` in the image: calls `prokka` with the given arguments |
-| `conf/prokka.ini` | Configuration template, copied to `/conf` in the image, for the S3 input and output folders |
+| `conf/prokka.ini` | Configuration, copied to `/conf` in the image: one `KEY=VALUE` line per setting, for the S3 input and output folders |
 
 ## Troubleshooting
 
 | Problem | Cause and fix |
 |---------|---------------|
 | `Folder 'data_out/prokka' already exists! Please change --outdir or use --force` | Add `--force`, or choose another `--outdir` |
-| Errors from `tbl2asn` | Only the GenBank submission files (`.sqn`) are affected. Other tbl2asn releases are in [binaries](../../binaries/README_tbl2asn.md) |
+| `Could not run command: tbl2asn ...` and exit code 2 | `tbl2asn` 25.6 refuses to run once it's more than a year old. This image runs it with a fixed date (`faketime`); if you build your own image, keep the wrapper. Other releases are in [binaries](../../binaries/README_tbl2asn.md) |
 | Roary fails on the GFF | Prokka's `.gff` includes the sequences at the end, which Roary needs. Don't use the `.gbk` or strip the `##FASTA` section |
 
 Known issues in the image, not fixed yet:
 
 * Prokka 1.14.6 is the last Prokka release. For new projects, [Bakta](../bakta) is its successor.
-* Ubuntu 18.04 is no longer supported by Ubuntu.
+* The GenBank files (`.gbk`, `.sqn`) carry the date that `tbl2asn` sees, 2019-01-01, instead of the real date.
 
 ## Citation
 
