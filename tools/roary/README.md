@@ -1,6 +1,30 @@
 # Roary Docker image
 
-A ready-to-run Linux (Ubuntu) Docker image of [Roary](https://github.com/sanger-pathogens/Roary/) 3.13.0, with FastTree and roary2svg, for the pan-genome analysis of prokaryotic genomes.
+A ready-to-run Linux Docker image of [Roary](https://github.com/sanger-pathogens/Roary/), with FastTree and roary2svg, for the pan-genome analysis of prokaryotic genomes.
+
+| | |
+|---|---|
+| **Image** | [`genomixcloud/roary`](https://hub.docker.com/r/genomixcloud/roary) |
+| **Tool version** | Roary 3.13.0, FastTree 2.2.0, roary2svg.pl (Roary v3.13.0) |
+| **Platform** | `linux/amd64` |
+| **Database** | None |
+| **Input → output** | Annotated genomes (GFF3) → pan-genome, core gene alignment, core-genome tree, presence/absence picture |
+| **Pipeline step** | After annotation ([Bakta](../bakta) or [Prokka](../prokka)). Last step of the pipeline |
+
+## Contents
+
+* [Quick start](#quick-start)
+* [Image contents](#image-contents)
+* [Requirements](#requirements)
+* [Usage](#usage)
+* [Outputs](#outputs)
+* [Input from Bakta](#input-from-bakta)
+* [Database setup](#database-setup)
+* [Running on AWS](#running-on-aws)
+* [Build and test](#build-and-test)
+* [Troubleshooting](#troubleshooting)
+* [Citation](#citation)
+* [Licence and references](#licence-and-references)
 
 ## Quick start
 
@@ -10,11 +34,25 @@ docker pull genomixcloud/roary
 docker run --name roary --rm -ti genomixcloud/roary /src/roary.sh -w
 
 # 2. Build the pan-genome of the 3 test genomes in the data folder of this repo
-cd data/data_gff
+cd data/data_gff_prokka
 docker run --name roary --rm -ti \
 --mount src="$(pwd)",target=/data,type=bind \
 genomixcloud/roary /src/roary.sh -e --mafft -p 8 -f pangenome *.gff
 ```
+
+## Image contents
+
+| Component | Version | Notes |
+|-----------|---------|-------|
+| Base image | Ubuntu 20.04 | |
+| Roary | 3.13.0 | From bioconda |
+| FastTree | 2.2.0 | Called as `FastTree` or `fasttree` |
+| roary2svg.pl | Roary v3.13.0 | In `/usr/bin/roary2svg.pl`. Needs the Perl module SVG (perl-svg 2.87) |
+| BLAST+, MAFFT, PRANK, CD-HIT, MCL, bedtools | 2.16.0, 7.526, 251117, 4.8.1, 22.282, 2.31.1 | Called by Roary |
+| Perl | 5.32.1 | |
+| ImageMagick (`convert`) | 6.9.10 (Ubuntu 20.04) | Turns `pangenome.svg` into a PNG |
+| AWS CLI | v2, latest at build time | |
+| Conda environment | `roary_env` | Installed from the exact lock `roary_env.lock.txt` (410 packages, see [Reproducible builds](#reproducible-builds)) |
 
 ## Requirements
 
@@ -23,17 +61,16 @@ genomixcloud/roary /src/roary.sh -e --mafft -p 8 -f pangenome *.gff
 * **Input format:** at least 2 annotated genomes in GFF3 format, as produced by [Prokka](../prokka), with the sequences included at the end of each file.
 * **Resources:** use `-p` to set the number of CPUs. Memory and run time grow with the number of genomes and the length of the core gene alignment. On the platform a job takes **at most 150 genomes** and runs with **45 GiB** of memory (see [Limits and memory](#limits-and-memory)).
 
-## Run locally
+## Usage
 
-1. Move to the `data/data_gff` directory of this repo, which contains the GFF files (see the tree below).
+1. Move to the `data/data_gff_prokka` folder of this repo, which contains the GFF files (see the tree below).
 
 ```md
-root_project
-├── data
-    ├── data_gff
-        ├── PROKKA_v1.gff
-        ├── PROKKA_v2.gff
-        └── PROKKA_v3.gff
+data
+└── data_gff_prokka
+    ├── PROKKA_v1.gff
+    ├── PROKKA_v2.gff
+    └── PROKKA_v3.gff
 ```
 
 2. Run the commands below in order:
@@ -64,7 +101,7 @@ Don't use `-t` (`-ti`) in steps 2 and 3, where the output is redirected to a fil
 
 If the `pangenome` folder already exists, Roary writes to a new folder with a different name, so remove it before running step 1 again.
 
-### Expected outputs
+## Outputs
 
 Roary writes its results to `pangenome`:
 
@@ -78,9 +115,17 @@ Roary writes its results to `pangenome`:
 | `core_gene_alignment.newick` | Tree from step 2 |
 | `pangenome.svg` | Picture from step 3 |
 
+## Input from Bakta
+
+GFF3 files from [Bakta](../bakta) need two preparation steps before Roary: unique contig names, and gene names that don't collide.
+
+### Contig names
+
+Bakta names the contigs `contig_1`, `contig_2`, ... in every sample, and writes a `##feature-ontology` header line that Roary's GFF parser doesn't accept. [scripts/rename_contigs.sh](../../scripts/rename_contigs.sh) fixes both: it prefixes the contigs with the sample name and removes the header line. See [Helper scripts](../../README.md#helper-scripts) in the root README.
+
 ### Gene names from Bakta
 
-GFF files from [Bakta](../bakta) need one extra step before Roary. Without it the core gene alignment, and the tree built from it, can be wrong.
+Without this step the core gene alignment, and the tree built from it, can be wrong. Without it the core gene alignment, and the tree built from it, can be wrong.
 
 **The problem.** When a gene has no gene symbol, Bakta puts the product description in `Name=`, and Roary uses it as the gene name. When Roary writes the core gene alignment, it replaces every character that isn't a letter, digit or `_` with `_`. Two different names can then end up the same, for example:
 
@@ -162,29 +207,13 @@ This step isn't in the image or the pipeline yet, and it hasn't been tested with
 
 Roary doesn't need a database.
 
-## AWS deployment ideas
+## Running on AWS
 
 These are ideas for deploying Roary on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
-### Architecture
+**Architecture:** input and output files live in **AWS S3**, the image is stored in **AWS ECR**, and **AWS Batch** runs the jobs. You also need AWS Networking and AWS IAM to connect them.
 
-Input and output files live in **AWS S3**, the image is stored in **AWS ECR**, and **AWS Batch** runs the jobs.
-
-### Required services
-
-AWS S3, AWS ECR and AWS Batch, plus AWS Networking and AWS IAM to connect them.
-
-### Steps
-
-1. Add the AWS CLI to the image: in the Dockerfile, under the comment **# install awscli**, add the following code and rebuild the image (`src/Dockerfile` already includes it):
-
-```shell
-RUN apt-get update && apt-get install -y --no-install-recommends unzip && \
-wget -P /usr/src/ https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip && \
-unzip -d /usr/src/  /usr/src/awscli-exe-linux-x86_64.zip && \
-rm /usr/src/awscli-exe-linux-x86_64.zip && \
-/usr/src/aws/install
-```
+1. The image already includes the AWS CLI (see the `# install awscli` step in the Dockerfile).
 
 2. In `/src/roary.sh`, link the **in** and **out** directories to AWS S3 and call Roary, FastTree and roary2svg in the order above (the commands are already in the script, commented out). You can place the S3 configuration and the parameters in `conf/roary.ini`.
 3. Test it locally with your AWS credentials:
@@ -231,7 +260,7 @@ Measured on AWS Batch with 5 closely related genomes of about 6.4 Mbp:
 
 The 150-genome limit is based on this formula. It hasn't been tested yet with a full 150-genome job.
 
-## Build and test the image
+## Build and test
 
 For contributors and developers.
 
@@ -290,7 +319,7 @@ docker run --name roary2svg --rm -ti roary:my_version /src/roary2svg.sh --help
 docker run --name fasttree --rm -ti roary:my_version /src/fasttree.sh --help
 ```
 
-Then run the steps in [Run locally](#run-locally) with your `my_version` tag.
+Then run the steps in [Usage](#usage) with your `my_version` tag.
 
 ### Files in this folder
 
@@ -305,9 +334,30 @@ Then run the steps in [Run locally](#run-locally) with your `my_version` tag.
 | `src/roary2svg.sh` | Same for `roary2svg.pl` |
 | `conf/roary.ini` | Configuration, copied to `/conf` in the image, such as the input and output folders |
 
-## References and licence
+## Troubleshooting
 
-* [Roary Software](https://github.com/sanger-pathogens/Roary/)
+| Problem | Cause and fix |
+|---------|---------------|
+| Roary writes to a folder with another name | The `pangenome` folder already existed. Remove it before running Roary again |
+| The `.newick` or `.svg` file has log messages or Windows line endings | Don't use `-t` (`-ti`) in `docker run` when you redirect the output to a file |
+| `core_gene_alignment.newick` is empty | FastTree ran out of memory. See [Limits and memory](#limits-and-memory) |
+| `Can't locate SVG.pm in @INC` from roary2svg.pl | The image was built before the conda lock, without perl-svg. Use an image built from this Dockerfile (see [Reproducible builds](#reproducible-builds)) |
+| `Error: You need to provide at least 2 files to build a pan genome` | Roary needs at least 2 GFF files |
+| Roary fails to parse a Bakta GFF | Run [scripts/rename_contigs.sh](../../scripts/rename_contigs.sh) first (see [Input from Bakta](#input-from-bakta)) |
+| Long tree branches or chimeric core blocks with Bakta input | Gene names collide. See [Gene names from Bakta](#gene-names-from-bakta) |
+
+## Citation
+
+If you use this image, please cite Roary, and FastTree for the core-genome tree:
+
+> Page, A. J., Cummins, C. A., Hunt, M., Wong, V. K., Reuter, S., Holden, M. T. G., Fookes, M., Falush, D., Keane, J. A., & Parkhill, J. (2015). Roary: rapid large-scale prokaryote pan genome analysis. *Bioinformatics*, 31(22), 3691–3693. https://doi.org/10.1093/bioinformatics/btv421
+
+> Price, M. N., Dehal, P. S., & Arkin, A. P. (2010). FastTree 2 – approximately maximum-likelihood trees for large alignments. *PLoS ONE*, 5(3), e9490. https://doi.org/10.1371/journal.pone.0009490
+
+## Licence and references
+
+* Roary is distributed under its own licence: [Roary licence](https://github.com/sanger-pathogens/Roary/blob/master/GPL-LICENSE). FastTree and the other tools have their own licences. This image only packages them.
+* [Roary software](https://github.com/sanger-pathogens/Roary/)
 * [Source data to generate Roary input data](https://github.com/microgenomics/tutorials/blob/master/pangenome.md)
+* [FastTree](http://www.microbesonline.org/fasttree/)
 * [Docker run command](https://docs.docker.com/engine/reference/commandline/run/)
-* Roary is distributed under its own licence: [Roary licence](https://github.com/sanger-pathogens/Roary/blob/master/GPL-LICENSE)

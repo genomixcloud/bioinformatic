@@ -1,64 +1,102 @@
 # Platon Docker image
 
-A ready-to-run Linux (Ubuntu) Docker image of [Platon](https://github.com/oschwengers/platon) 1.7, for the identification and characterization of plasmid contigs in bacterial genome assemblies.
+A ready-to-run Linux Docker image of [Platon](https://github.com/oschwengers/platon), for the identification and characterization of plasmid contigs in bacterial genome assemblies.
+
+| | |
+|---|---|
+| **Image** | [`genomixcloud/platon`](https://hub.docker.com/r/genomixcloud/platon) |
+| **Tool version** | Platon 1.7 |
+| **Platform** | `linux/amd64` |
+| **Database** | Required (downloaded from Zenodo) |
+| **Input → output** | Assembly (FASTA) → plasmid and chromosome contigs (FASTA), summary (TSV, JSON) |
+| **Pipeline step** | After assembly ([SPAdes](../spades), [Pilon](../pilon)) |
+
+## Contents
+
+* [Quick start](#quick-start)
+* [Image contents](#image-contents)
+* [Requirements](#requirements)
+* [Usage](#usage)
+* [Outputs](#outputs)
+* [Database setup](#database-setup)
+* [Running on AWS](#running-on-aws)
+* [Build and test](#build-and-test)
+* [Troubleshooting](#troubleshooting)
+* [Citation](#citation)
+* [Licence and references](#licence-and-references)
 
 ## Quick start
 
 ```shell
 # 1. Pull the image and check the version
 docker pull genomixcloud/platon
-docker run --name platon --rm -ti genomixcloud/platon platon --version
+docker run --rm genomixcloud/platon platon --version
 
 # 2. Download the Platon database into ./platon_db (see Database setup)
 
 # 3. Classify the test contigs from the data folder of this repo
 #    (run from the data folder, with platon_db inside it)
 mkdir data_out
-docker run --name platon --rm -ti \
---mount src="$(pwd)",target=/data,type=bind \
-genomixcloud/platon platon \
---mode sensitivity --threads 8 --db /data/platon_db \
-/data/data_fasta/contigs.fasta -o /data/data_out
+docker run --rm --mount src="$(pwd)",target=/data,type=bind \
+  genomixcloud/platon platon \
+  --mode sensitivity --threads 8 --db /data/platon_db \
+  /data/data_fasta/contigs.fasta -o /data/data_out
 ```
+
+## Image contents
+
+| Component | Version | Notes |
+|-----------|---------|-------|
+| Base image | Ubuntu 20.04 | |
+| Platon | 1.7 | From bioconda, installed in the conda **base** environment |
+| Dependencies (DIAMOND, BLAST+, HMMER, MUMmer, INFERNAL, Prodigal) | resolved by conda at build time | Not pinned |
+| Miniconda | latest at build time | Not pinned |
 
 ## Requirements
 
-* **Docker**
-* **Reference database (mandatory):** Platon can't run without its database (see [Database setup](#database-setup)).
+* **Docker** (version 24 or later to build the image).
+* **Input:** genome assemblies (contigs) in FASTA format.
+* **Database (mandatory):** Platon can't run without its database (see [Database setup](#database-setup)).
 * **Storage:** keep the database in external storage, or on AWS EFS when running on AWS, and mount it into the container.
-* **Input format:** genome assemblies (contigs) in FASTA format.
-* **Resources:** Platon needs a lot of memory. With 16GB of RAM it failed with **diamond execution failed! diamond-error-code=-11**; it ran successfully with **24GB** ([error reference](https://github.com/oschwengers/platon/issues/45#issuecomment-1983151977)). Use `--threads` to set the number of CPUs.
+* **Resources:** Platon needs a lot of memory. With 16 GB of RAM it failed with `diamond execution failed! diamond-error-code=-11`; it ran with **24 GB** ([error reference](https://github.com/oschwengers/platon/issues/45#issuecomment-1983151977)). Use `--threads` to set the number of CPUs.
 
-## Run locally
+## Usage
 
-1. [Download the Platon database](#database-setup) to the **platon_db** directory.
-2. Move to the `data` directory of this repo, which contains the FASTA files, and put `platon_db` inside it.
-3. Create the output directory (**data_out** in our example).
+1. [Download the Platon database](#database-setup) to a **platon_db** folder.
+2. Move to the `data` folder of this repo, which contains the FASTA files, and put `platon_db` inside it.
+3. Create the output folder (`data_out` in this example).
 
 ```md
-root_project
-├── data
-│   ├── data_fasta
-│   │    └──contigs.fasta
-│   ├── data_out
-│   ├── platon_db
+data
+├── data_fasta
+│   └── contigs.fasta
+├── data_out
+└── platon_db
 ```
 
 4. Run Platon:
 
 ```shell
-docker run --name platon --rm -ti \
---mount src="$(pwd)",target=/data,type=bind \
-genomixcloud/platon platon \
---mode sensitivity --threads 8 --db /data/platon_db \
-/data/data_fasta/contigs.fasta -o /data/data_out
+docker run --rm --mount src="$(pwd)",target=/data,type=bind \
+  genomixcloud/platon platon \
+  --mode sensitivity --threads 8 --db /data/platon_db \
+  /data/data_fasta/contigs.fasta -o /data/data_out
 ```
 
-`--mode` can be `sensitivity`, `accuracy` or `specificity`.
+Useful options:
 
-### Expected outputs
+| Option | Meaning |
+|--------|---------|
+| `--db <folder>` | Database folder |
+| `-o`, `--output <folder>` | Output folder |
+| `--mode <mode>` | `sensitivity`, `accuracy` (default) or `specificity` |
+| `--characterize` | Characterize all contigs, not only the plasmid ones |
+| `--threads <n>` | Number of CPUs |
+| `--prefix <name>` | Prefix of the output files. Default: the input file name |
 
-Platon writes its results to `data_out`, with the input file name as prefix:
+## Outputs
+
+Platon writes its results to the output folder, with the input file name as prefix:
 
 | File | Content |
 |------|---------|
@@ -79,67 +117,58 @@ rm db.tar.gz
 mv db platon_db
 ```
 
-ref: [Platon database download](https://github.com/oschwengers/platon?tab=readme-ov-file#database-download)
+More details: [Platon database download](https://github.com/oschwengers/platon?tab=readme-ov-file#database-download).
 
-## AWS deployment ideas
+## Running on AWS
 
 These are ideas for deploying Platon on AWS, not a tested step-by-step guide. Adapt them to your own AWS setup.
 
-### Architecture
-
-Input and output files live in **AWS S3**, the Platon database lives on **AWS EFS**, the image is stored in **AWS ECR**, and **AWS Batch** runs the jobs.
-
-### Required services
-
-AWS S3, AWS ECR, AWS EFS and AWS Batch, plus AWS Networking and AWS IAM to connect them.
-
-### Steps
+**Architecture:** input and output files live in **AWS S3**, the Platon database lives on **AWS EFS**, the image is stored in **AWS ECR**, and **AWS Batch** runs the jobs. You also need AWS Networking and AWS IAM to connect them.
 
 1. Add the AWS CLI to the image: in the Dockerfile, under the comment **# install awscli**, add the following code and rebuild the image:
 
-```shell
-RUN apt-get update && apt-get install -y --no-install-recommends unzip && \
-wget -P /usr/src/ https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip && \
-unzip -d /usr/src/  /usr/src/awscli-exe-linux-x86_64.zip && \
-rm /usr/src/awscli-exe-linux-x86_64.zip && \
-/usr/src/aws/install
-```
+   ```dockerfile
+   RUN apt-get update && apt-get install -y --no-install-recommends unzip && \
+       wget -P /usr/src/ https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip && \
+       unzip -d /usr/src/ /usr/src/awscli-exe-linux-x86_64.zip && \
+       rm /usr/src/awscli-exe-linux-x86_64.zip && \
+       /usr/src/aws/install
+   ```
 
-2. Store the Platon database in a volume on AWS EFS. We recommend **AWS EFS for storing the Platon database in production**.
-3. In `/src/platon.sh`, link the **in** and **out** directories to AWS S3 and the database path to the volume on AWS EFS. The links and the Platon parameters can be configured in `conf/platon.ini`.
+2. Store the Platon database in a volume on AWS EFS. We recommend **AWS EFS for the Platon database in production**.
+3. In `/src/platon.sh`, link the **in** and **out** folders to AWS S3 and the database path to the volume on AWS EFS. You can put the links and the Platon parameters in `conf/platon.ini`.
 4. Test it locally with your AWS credentials:
 
-```shell
-docker run --name platon --rm -ti \
--e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
--e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
---mount src="$(pwd)",target=/data,type=bind \
-${your_own_workspace}/platon /src/platon.sh
-```
+   ```shell
+   docker run --rm \
+     -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+     -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+     --mount src="$(pwd)",target=/data,type=bind \
+     ${your_own_workspace}/platon /src/platon.sh
+   ```
 
 5. Push the image to your AWS account (**AWS ECR**).
-6. Create an AWS Batch job, linked to the volume on AWS EFS, that points to the Platon image uploaded to AWS ECR. Give it at least 24GB of memory (see [Requirements](#requirements)).
+6. Create an AWS Batch job, linked to the volume on AWS EFS, that points to the Platon image in AWS ECR. Give it at least 24 GB of memory (see [Requirements](#requirements)).
 
-This only covers the core aspects. For more about running the tools on AWS, see the [AWS guide](../../aws).
+For more about running the tools on AWS, see the [AWS guide](../../aws).
 
-## Build and test the image
+## Build and test
 
-For contributors and developers.
+For contributors and developers. From the root of the repository:
 
-### Build
+```shell
+make build DOCKER_IMAGE=platon DOCKER_TAG=my_version
+docker run --rm platon:my_version platon --version
+```
+
+Or with Docker only:
 
 ```shell
 cd tools/platon
-docker build --platform=linux/amd64 -t genomixcloud/platon:my_version .
+docker build --platform=linux/amd64 -t platon:my_version .
 ```
 
-### Test
-
-```shell
-docker run --name platon --rm -ti genomixcloud/platon:my_version platon --version
-```
-
-Then run the [Quick start](#quick-start) example with your `my_version` tag.
+Then run the [Quick start](#quick-start) with your `my_version` tag. `make push` and `make build-all` publish the image to Docker Hub; see the [root README](../../README.md#building-and-publishing-with-make).
 
 ### Files in this folder
 
@@ -147,10 +176,29 @@ Then run the [Quick start](#quick-start) example with your `my_version` tag.
 |------|---------|
 | `Dockerfile` | Ubuntu 20.04 image with Miniconda and Platon (from bioconda) |
 | `src/platon.sh` | Template script, copied to `/src` in the image: calls `platon` with the variables set in `platon.ini` |
-| `conf/platon.ini` | Configuration, copied to `/conf` in the image, such as the input file, database and output folder |
+| `conf/platon.ini` | Configuration template, copied to `/conf` in the image, for the input file, database and output folder |
 
-## References and licence
+## Troubleshooting
 
-* [Platon Documentation](https://github.com/oschwengers/platon)
+| Problem | Cause and fix |
+|---------|---------------|
+| `diamond execution failed! diamond-error-code=-11` | Not enough memory. Give Docker or the AWS Batch job at least 24 GB |
+| Platon can't find the database | `--db` must point to the extracted database folder (`platon_db`), as seen inside the container |
+
+Known issues in the image, not fixed yet:
+
+* **Builds aren't reproducible.** The Dockerfile installs `Miniconda3-latest`, and only Platon is pinned: its dependencies are resolved by conda at build time, in the base environment. Two builds on different dates can contain different versions. The [Roary](../roary#reproducible-builds) image solves the same problem with an exact conda lock.
+* `src/platon.sh` is a template: the variables it uses aren't read from `conf/platon.ini` yet. The header comments of the script and of `conf/platon.ini` were copied from SPAdes and QUAST and still name those tools.
+
+## Citation
+
+If you use this image, please cite Platon:
+
+> Schwengers, O., Barth, P., Falgenhauer, L., Hain, T., Chakraborty, T., & Goesmann, A. (2020). Platon: identification and characterization of bacterial plasmid contigs in short-read draft assemblies exploiting protein sequence-based replicon distribution scores. *Microbial Genomics*, 6(10). https://doi.org/10.1099/mgen.0.000398
+
+## Licence and references
+
+* Platon is distributed under its own licence: see the [Platon repository](https://github.com/oschwengers/platon). This image only packages it.
+* [Platon documentation](https://github.com/oschwengers/platon)
+* [Platon database download](https://github.com/oschwengers/platon?tab=readme-ov-file#database-download)
 * [Docker run command](https://docs.docker.com/engine/reference/commandline/run/)
-* Platon is distributed under its own licence: see the [Platon repository](https://github.com/oschwengers/platon)
