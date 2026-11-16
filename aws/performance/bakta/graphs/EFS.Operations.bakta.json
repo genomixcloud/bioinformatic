@@ -1,0 +1,85 @@
+{
+  "view": "timeSeries",
+  "stacked": false,
+  "region": "eu-west-1",
+  "title": "Bakta - EFS operations per second",
+  "start": "2026-11-13T10:26:00Z",
+  "end": "2026-11-13T11:10:00Z",
+  "timezone": "+0000",
+  "period": 60,
+  "metrics": [
+    [
+      "AWS/EFS",
+      "DataReadIOBytes",
+      "FileSystemId",
+      "fs-05846c89e2da6b943",
+      {
+        "id": "d",
+        "stat": "SampleCount",
+        "visible": false
+      }
+    ],
+    [
+      "AWS/EFS",
+      "MetadataIOBytes",
+      "FileSystemId",
+      "fs-05846c89e2da6b943",
+      {
+        "id": "m",
+        "stat": "SampleCount",
+        "visible": false
+      }
+    ],
+    [
+      {
+        "expression": "d / PERIOD(d)",
+        "label": "Data reads/s",
+        "id": "dr"
+      }
+    ],
+    [
+      {
+        "expression": "m / PERIOD(m)",
+        "label": "Metadata ops/s",
+        "id": "mr"
+      }
+    ]
+  ],
+  "yAxis": {
+    "left": {
+      "min": 0,
+      "label": "ops/s"
+    }
+  },
+  "annotations": {
+    "vertical": [
+      [
+        {
+          "label": "CDS UPS lookup",
+          "value": "2026-11-13T10:33:48Z"
+        },
+        {
+          "value": "2026-11-13T10:41:41Z"
+        }
+      ],
+      [
+        {
+          "label": "Diamond",
+          "value": "2026-11-13T10:42:40Z"
+        },
+        {
+          "value": "2026-11-13T10:49:01Z"
+        }
+      ],
+      [
+        {
+          "label": "sORF UPS lookup",
+          "value": "2026-11-13T10:55:16Z"
+        },
+        {
+          "value": "2026-11-13T11:03:11Z"
+        }
+      ]
+    ]
+  }
+}

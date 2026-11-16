@@ -1,0 +1,79 @@
+{
+  "view": "timeSeries",
+  "stacked": false,
+  "region": "eu-west-1",
+  "title": "Bakta - EFS throughput utilization (%)",
+  "start": "2026-11-13T10:26:00Z",
+  "end": "2026-11-13T11:10:00Z",
+  "timezone": "+0000",
+  "period": 60,
+  "metrics": [
+    [
+      "AWS/EFS",
+      "MeteredIOBytes",
+      "FileSystemId",
+      "fs-05846c89e2da6b943",
+      {
+        "id": "mt",
+        "stat": "Sum",
+        "visible": false
+      }
+    ],
+    [
+      "AWS/EFS",
+      "PermittedThroughput",
+      "FileSystemId",
+      "fs-05846c89e2da6b943",
+      {
+        "id": "pt",
+        "stat": "Average",
+        "visible": false
+      }
+    ],
+    [
+      {
+        "expression": "(mt / PERIOD(mt)) / pt * 100",
+        "label": "Throughput utilization (%)",
+        "id": "u"
+      }
+    ]
+  ],
+  "yAxis": {
+    "left": {
+      "min": 0,
+      "max": 100,
+      "label": "%"
+    }
+  },
+  "annotations": {
+    "vertical": [
+      [
+        {
+          "label": "CDS UPS lookup",
+          "value": "2026-11-13T10:33:48Z"
+        },
+        {
+          "value": "2026-11-13T10:41:41Z"
+        }
+      ],
+      [
+        {
+          "label": "Diamond",
+          "value": "2026-11-13T10:42:40Z"
+        },
+        {
+          "value": "2026-11-13T10:49:01Z"
+        }
+      ],
+      [
+        {
+          "label": "sORF UPS lookup",
+          "value": "2026-11-13T10:55:16Z"
+        },
+        {
+          "value": "2026-11-13T11:03:11Z"
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "view": "timeSeries",
+  "stacked": false,
+  "region": "eu-west-1",
+  "title": "Bakta - NetworkIn per instance (bytes per 5 min, mostly EFS)",
+  "start": "2026-11-13T10:26:00Z",
+  "end": "2026-11-13T11:10:00Z",
+  "timezone": "+0000",
+  "stat": "Sum",
+  "period": 300,
+  "metrics": [
+    ["AWS/EC2", "NetworkIn", "InstanceId", "i-04366523d15f5d0da", {"label": "Sample_A1_S8"}],
+    ["AWS/EC2", "NetworkIn", "InstanceId", "i-087b88d15d0f9ad60", {"label": "Sample_A3_S11"}],
+    ["AWS/EC2", "NetworkIn", "InstanceId", "i-082ba1ed032b65262", {"label": "Sample_A2_S1"}],
+    ["AWS/EC2", "NetworkIn", "InstanceId", "i-0dde0a81430178b0b", {"label": "Sample_BB_S7"}],
+    ["AWS/EC2", "NetworkIn", "InstanceId", "i-072ae09e3f8a8a46a", {"label": "Sample_A4_S8"}]
+  ],
+  "yAxis": {"left": {"min": 0, "label": "bytes"}}
+}
