@@ -226,5 +226,8 @@ The [data](data) folder contains a complete dataset to test every tool in the pi
 
 ## License
 
-Each bioinformatic tool packaged in these images is distributed under its own license. Please check the upstream project of each tool before using it.
+The Dockerfiles, scripts, configuration files, documentation and guides in this repository are licensed under the [Apache License 2.0](LICENSE). You can use, modify and redistribute them for any purpose, including commercial use.
 
+**Trademarks.** "GenomixCloud" and the GenomixCloud logo are trademarks of Scadip Limited and are not covered by the license. You may say that your work uses the GenomixCloud images, but not use the name or logo to brand or promote your own products. See [NOTICE](NOTICE).
+
+**Third-party tools and databases.** Each bioinformatic tool packaged in these images, and each reference database, is distributed under its own license and terms of use, linked from the README of each tool. Some databases are free for academic use only and need a separate, sometimes paid, license for commercial use. **Before any commercial use, you are responsible for checking and complying with those terms.** Everything is provided "as is", without warranty. See [NOTICE](NOTICE).
