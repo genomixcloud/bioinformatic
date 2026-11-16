@@ -2,7 +2,7 @@
 
 <!-- short: <Tool> <version>: <what it does, in one line>. Max 100 characters. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [<Tool>](<upstream URL>) <version> for <purpose>. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [<Tool>](<upstream URL>) <version> for <purpose>. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 

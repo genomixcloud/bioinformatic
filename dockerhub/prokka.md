@@ -2,7 +2,7 @@
 
 <!-- short: Prokka 1.14.6: rapid annotation of prokaryotic genomes. Databases included. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Prokka](https://github.com/tseemann/prokka) 1.14.6 for the rapid annotation of prokaryotic genomes. The Prokka databases are included in the image, and its GFF3 output is ready for pan-genome analysis with [genomixcloud/roary](https://hub.docker.com/r/genomixcloud/roary). It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Prokka](https://github.com/tseemann/prokka) 1.14.6 for the rapid annotation of prokaryotic genomes. The Prokka databases are included in the image, and its GFF3 output is ready for pan-genome analysis with [genomixcloud/roary](https://hub.docker.com/r/genomixcloud/roary). It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -64,6 +64,6 @@ Prokka is distributed under the [GPL v3 licence](https://github.com/tseemann/pro
 
 If you use Prokka, please cite: Seemann, T. (2014). Prokka: rapid prokaryotic genome annotation. *Bioinformatics*, 30(14), 2068–2069. https://doi.org/10.1093/bioinformatics/btu153
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

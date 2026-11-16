@@ -2,7 +2,7 @@
 
 <!-- short: SPAdes 3.15.5: de novo genome assembly from sequencing reads. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [SPAdes](https://github.com/ablab/spades) 3.15.5 for the de novo assembly of genomes from sequencing reads. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [SPAdes](https://github.com/ablab/spades) 3.15.5 for the de novo assembly of genomes from sequencing reads. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -56,6 +56,6 @@ SPAdes is distributed under the [GPL v2 licence](https://github.com/ablab/spades
 
 If you use SPAdes, please cite: Bankevich, A., et al. (2012). SPAdes: a new genome assembly algorithm and its applications to single-cell sequencing. *Journal of Computational Biology*, 19(5), 455–477. https://doi.org/10.1089/cmb.2012.0021
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

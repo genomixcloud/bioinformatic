@@ -2,7 +2,7 @@
 
 <!-- short: fastp 1.0.1: quality control, adapter trimming and filtering of sequencing reads. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [fastp](https://github.com/OpenGene/fastp) 1.0.1 for fast all-in-one quality control, adapter trimming and filtering of sequencing reads. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [fastp](https://github.com/OpenGene/fastp) 1.0.1 for fast all-in-one quality control, adapter trimming and filtering of sequencing reads. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -58,6 +58,6 @@ fastp is distributed under the [MIT licence](https://github.com/OpenGene/fastp/b
 
 If you use fastp, please cite: Chen, S., Zhou, Y., Chen, Y., & Gu, J. (2018). fastp: an ultra-fast all-in-one FASTQ preprocessor. *Bioinformatics*, 34(17), i884–i890. https://doi.org/10.1093/bioinformatics/bty560
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

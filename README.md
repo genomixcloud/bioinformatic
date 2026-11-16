@@ -1,6 +1,6 @@
 [![name](assets/genomixlogo.png)](https://genomixcloud.com/)
 
-# Genomix Cloud Bioinformatic Tools
+# GenomixCloud Bioinformatic Tools
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/genomixcloud/bioinformatic?style=flat-square)
 [![Docker Hub](https://img.shields.io/badge/docker%20hub-genomixcloud-blue?style=flat-square&logo=docker)](https://hub.docker.com/u/genomixcloud)
@@ -23,9 +23,9 @@
 
 ## About
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
 
-This repository hosts the source code of the plain Docker images of the bioinformatic tools that are part of the Genomix Cloud platform. These images form the foundation of our suite of bioinformatic tools and support various genomic analysis tasks. You will find instructions on building the Docker images used in our workflows, and suggestions for improving performance and automation within the AWS ecosystem.
+This repository hosts the source code of the plain Docker images of the bioinformatic tools that are part of the GenomixCloud platform. These images form the foundation of our suite of bioinformatic tools and support various genomic analysis tasks. You will find instructions on building the Docker images used in our workflows, and suggestions for improving performance and automation within the AWS ecosystem.
 
 Please note that this repository is continuously evolving. See the [Manifest](Manifest.md) for the goals and roadmap of the project, and the [Changelog](CHANGELOG.md) for notable changes.
 

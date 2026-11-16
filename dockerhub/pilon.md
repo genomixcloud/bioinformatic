@@ -2,7 +2,7 @@
 
 <!-- short: Pilon 1.24 with bwa-mem2 2.2.1 and samtools 1.9: polishing of genome assemblies. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Pilon](https://github.com/broadinstitute/pilon) 1.24, with bwa-mem2 and samtools, for polishing and improving genome assemblies with sequencing reads. Pilon reads the assembly in FASTA format and one or more BAM files of reads aligned to it; the image includes bwa-mem2 and samtools to make them. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Pilon](https://github.com/broadinstitute/pilon) 1.24, with bwa-mem2 and samtools, for polishing and improving genome assemblies with sequencing reads. Pilon reads the assembly in FASTA format and one or more BAM files of reads aligned to it; the image includes bwa-mem2 and samtools to make them. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -103,6 +103,6 @@ Pilon is distributed under the [GPL v2 licence](https://github.com/broadinstitut
 
 If you use Pilon, please cite: Walker, B. J., et al. (2014). Pilon: an integrated tool for comprehensive microbial variant detection and genome assembly improvement. *PLoS ONE*, 9(11), e112963. https://doi.org/10.1371/journal.pone.0112963
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

@@ -1,4 +1,4 @@
-# Build GenHub tool images and push them to Docker Hub.
+# Build GenomixCloud tool images and push them to Docker Hub.
 #
 # Default values (can be overridden when running make)
 DOCKER_IMAGE ?=

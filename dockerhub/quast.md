@@ -2,7 +2,7 @@
 
 <!-- short: QUAST 5.2.0: quality assessment of genome assemblies, with or without a reference. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [QUAST](https://github.com/ablab/quast) 5.2.0 for the quality assessment of genome assemblies (N50, number of contigs, misassemblies, genome fraction...), with or without a reference genome. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [QUAST](https://github.com/ablab/quast) 5.2.0 for the quality assessment of genome assemblies (N50, number of contigs, misassemblies, genome fraction...), with or without a reference genome. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -72,6 +72,6 @@ QUAST is distributed under the [GPL v2 licence](https://github.com/ablab/quast/b
 
 If you use QUAST, please cite: Gurevich, A., Saveliev, V., Vyahhi, N., & Tesler, G. (2013). QUAST: quality assessment tool for genome assemblies. *Bioinformatics*, 29(8), 1072–1075. https://doi.org/10.1093/bioinformatics/btt086
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

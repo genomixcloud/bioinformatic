@@ -1,8 +1,8 @@
 Manifest of Technical Product: genomixcloud docker images
 
-Genomixcloud docker images: <https://hub.docker.com/u/genomixcloud>
+GenomixCloud docker images: <https://hub.docker.com/u/genomixcloud>
 
-Source code of the Genomixcloud docker images and AWS guidances: <https://github.com/genomixcloud/bioinformatic> 
+Source code of the GenomixCloud docker images and AWS guidances: <https://github.com/genomixcloud/bioinformatic> 
 
 1\. Introduction:
 
@@ -10,13 +10,13 @@ Source code of the Genomixcloud docker images and AWS guidances: <https://github
 
 2\. Purpose:
 
-- The primary purpose of Genomix Cloud Docker Images is to empower bioinformaticians to effectively understand and technically implement bioinformatic tool docker images following the best practices and provide bioinformaticians with clues that let them implement bioinformatic tools in the AWS Ecosystem.
+- The primary purpose of GenomixCloud Docker Images is to empower bioinformaticians to effectively understand and technically implement bioinformatic tool docker images following the best practices and provide bioinformaticians with clues that let them implement bioinformatic tools in the AWS Ecosystem.
 
 3\. Features:
 
-- **OS/ARCH for images hosted in Genomix Cloud Docker**: Linux/amd64. Ubuntu.
+- **OS/ARCH for images hosted in GenomixCloud Docker**: Linux/amd64. Ubuntu.
 
-- **Customization**: The Genomix Cloud Docker Images offer customization options to build images to suit individual preferences(**Images focused on running in AWS**).
+- **Customization**: The GenomixCloud Docker Images offer customization options to build images to suit individual preferences(**Images focused on running in AWS**).
 
 4\. Technology:
 
@@ -28,13 +28,13 @@ Source code of the Genomixcloud docker images and AWS guidances: <https://github
 
 5\. Design Principles:
 
-- Easy to Design: The Genomix Cloud Docker Images prioritizes easy-to-code docker images(foundation of all base images: **Ubuntu**).
+- Easy to Design: The GenomixCloud Docker Images prioritizes easy-to-code docker images(foundation of all base images: **Ubuntu**).
 
-- Easy to Test: The Genomix Cloud Docker Images provide the complete dataset to test every tool in the pipeline hosted in **genomixcloud.com**.
+- Easy to Test: The GenomixCloud Docker Images provide the complete dataset to test every tool in the pipeline hosted in **genomixcloud.com**.
 
 6\. Development Roadmap:
 
-- Phase 1: MVP The Genomix Cloud Docker Images - Implement the base docker images focus on functionalities.
+- Phase 1: MVP The GenomixCloud Docker Images - Implement the base docker images focus on functionalities.
 
 - Phase 2: Iterative Improvements - Improve docker images following docker **best practices**. Create multi-platform images able to run on **arm** Arch([following AWS specifications AWS Graviton can deliver a good price-performance for your cloud workloads](https://aws.amazon.com/ec2/graviton/))
 

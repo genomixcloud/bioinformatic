@@ -2,7 +2,7 @@
 
 <!-- short: FastQC 0.12.1: quality control of raw sequencing reads (FASTQ, SAM, BAM). -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) 0.12.1 for the quality control of raw sequencing reads. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) 0.12.1 for the quality control of raw sequencing reads. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -55,6 +55,6 @@ FastQC is distributed under the [GPL v3 licence](https://github.com/s-andrews/Fa
 
 If you use FastQC, please cite: Andrews, S. (2010). FastQC: a quality control tool for high throughput sequence data. https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

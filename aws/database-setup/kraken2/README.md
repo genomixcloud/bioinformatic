@@ -62,7 +62,7 @@ The collections in the *Kraken2 + Bracken* table of the 22 Oct 2026 release (ind
 
 The table also has larger, less frequently updated databases (EuPathDB, core_nt, GTDB), each with its own date.
 
-The capped databases (-8, -16) are the full database reduced to fit in 8 or 16 GB of memory, at the cost of some sensitivity and accuracy. For the Genomix Cloud pipeline we use **Standard** in production, and **Standard-8** or **Standard-16** for tests.
+The capped databases (-8, -16) are the full database reduced to fit in 8 or 16 GB of memory, at the cost of some sensitivity and accuracy. For the GenomixCloud pipeline we use **Standard** in production, and **Standard-8** or **Standard-16** for tests.
 
 Download and checksum URLs of the three Standard databases in the 22 Oct 2026 release:
 

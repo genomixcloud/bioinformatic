@@ -2,7 +2,7 @@
 
 <!-- short: FimTyper: FimH typing of Escherichia coli genomes. Database and test genome included. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [FimTyper](https://bitbucket.org/genomicepidemiology/fimtyper/) for the FimH typing of *Escherichia coli* genomes. The FimTyper database and a test genome are included in the image. This is an **alpha** image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [FimTyper](https://bitbucket.org/genomicepidemiology/fimtyper/) for the FimH typing of *Escherichia coli* genomes. The FimTyper database and a test genome are included in the image. This is an **alpha** image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -65,6 +65,6 @@ FimTyper is distributed under the [Apache License, Version 2.0](https://bitbucke
 
 If you use FimTyper, please cite: Roer, L., et al. (2017). Development of a web tool for *Escherichia coli* subtyping based on *fimH* alleles. *Journal of Clinical Microbiology*, 55(8), 2538–2543. https://doi.org/10.1128/JCM.00737-17
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

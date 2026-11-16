@@ -2,7 +2,7 @@
 
 <!-- short: Roary 3.13.0 pan-genome analysis, with FastTree 2.2.0 and roary2svg. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Roary](https://github.com/sanger-pathogens/Roary/) 3.13.0 for the pan-genome analysis of prokaryotic genomes, with FastTree for the core-genome tree and roary2svg for the gene presence and absence picture. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Roary](https://github.com/sanger-pathogens/Roary/) 3.13.0 for the pan-genome analysis of prokaryotic genomes, with FastTree for the core-genome tree and roary2svg for the gene presence and absence picture. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -82,6 +82,6 @@ Roary is distributed under the [GPL v3 licence](https://github.com/sanger-pathog
 
 If you use this image, please cite Roary, and FastTree for the tree: Page, A. J., et al. (2015). Roary: rapid large-scale prokaryote pan genome analysis. *Bioinformatics*, 31(22), 3691–3693. https://doi.org/10.1093/bioinformatics/btv421, and Price, M. N., Dehal, P. S., & Arkin, A. P. (2010). FastTree 2 – approximately maximum-likelihood trees for large alignments. *PLoS ONE*, 5(3), e9490. https://doi.org/10.1371/journal.pone.0009490
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
