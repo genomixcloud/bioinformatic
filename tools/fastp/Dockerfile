@@ -6,7 +6,7 @@ ARG FAStpVer=1.0.1
 ARG FAStpSha256="c42e121f75029fd29724347f26db316e4d6c19dbab9d161713b5561c3cf82631"
 
 LABEL dockerfile.version="2"
-LABEL software="genhub/FAStp"
+LABEL software="genomixcloud/fastp"
 LABEL software.version="1.0.1"
 LABEL website="https://github.com/OpenGene/fastp"
 LABEL license="https://github.com/OpenGene/fastp/blob/master/LICENSE"

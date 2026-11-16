@@ -2,7 +2,7 @@
 
 <!-- short: Kraken2 2.1.6: taxonomic classification of sequencing reads. Database not included. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Kraken2](https://github.com/DerrickWood/kraken2) 2.1.6 for the taxonomic classification of sequencing reads, to check the species and contamination of a sample. It includes `kraken2-build` to build your own database. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Kraken2](https://github.com/DerrickWood/kraken2) 2.1.6 for the taxonomic classification of sequencing reads, to check the species and contamination of a sample. It includes `kraken2-build` to build your own database. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -80,6 +80,6 @@ Kraken2 is distributed under the [MIT licence](https://github.com/DerrickWood/kr
 
 If you use Kraken2, please cite: Wood, D. E., Lu, J., & Langmead, B. (2019). Improved metagenomic analysis with Kraken 2. *Genome Biology*, 20(1), 257. https://doi.org/10.1186/s13059-019-1891-0
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

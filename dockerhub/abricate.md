@@ -2,7 +2,7 @@
 
 <!-- short: ABRicate 1.0.1: screening of contigs for antimicrobial resistance and virulence genes. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [ABRicate](https://github.com/tseemann/abricate) 1.0.1 for the mass screening of contigs for antimicrobial resistance and virulence genes. The databases are included in the image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [ABRicate](https://github.com/tseemann/abricate) 1.0.1 for the mass screening of contigs for antimicrobial resistance and virulence genes. The databases are included in the image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -70,6 +70,6 @@ ABRicate is distributed under the [GPL v2 licence](https://github.com/tseemann/a
 
 ABRicate has no paper. Please cite the software, and the database you used: Seemann, T. ABRicate: mass screening of contigs for antimicrobial and virulence genes. https://github.com/tseemann/abricate
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

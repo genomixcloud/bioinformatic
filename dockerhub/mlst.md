@@ -2,7 +2,7 @@
 
 <!-- short: mlst 2.23.0: multi-locus sequence typing of assemblies against the PubMLST schemes. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [mlst](https://github.com/tseemann/mlst) 2.23.0 for the multi-locus sequence typing (MLST) of genome assemblies against the PubMLST schemes. The schemes are included in the image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [mlst](https://github.com/tseemann/mlst) 2.23.0 for the multi-locus sequence typing (MLST) of genome assemblies against the PubMLST schemes. The schemes are included in the image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -70,6 +70,6 @@ mlst is distributed under the [GPL v2 licence](https://github.com/tseemann/mlst/
 
 If you use mlst, please cite the software and PubMLST: Seemann, T. mlst: scan contig files against PubMLST typing schemes. https://github.com/tseemann/mlst, and Jolley, K. A., Bray, J. E., & Maiden, M. C. J. (2018). Open-access bacterial population genomics: BIGSdb software, the PubMLST.org website and their applications. *Wellcome Open Research*, 3, 124. https://doi.org/10.12688/wellcomeopenres.14826.1
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

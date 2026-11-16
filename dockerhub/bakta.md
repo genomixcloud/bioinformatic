@@ -2,7 +2,7 @@
 
 <!-- short: Bakta 1.11.4: rapid and standardized annotation of bacterial genomes and plasmids. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Bakta](https://github.com/oschwengers/bakta) 1.11.4 for the rapid and standardized annotation of bacterial genomes, metagenome-assembled genomes (MAGs) and plasmids. Its GFF3 output is ready for pan-genome analysis with [genomixcloud/roary](https://hub.docker.com/r/genomixcloud/roary). It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Bakta](https://github.com/oschwengers/bakta) 1.11.4 for the rapid and standardized annotation of bacterial genomes, metagenome-assembled genomes (MAGs) and plasmids. Its GFF3 output is ready for pan-genome analysis with [genomixcloud/roary](https://hub.docker.com/r/genomixcloud/roary). It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -77,6 +77,6 @@ Bakta is distributed under the [GPL v3 licence](https://github.com/oschwengers/b
 
 If you use Bakta, please cite: Schwengers, O., Jelonek, L., Dieckmann, M. A., Beyvers, S., Blom, J., & Goesmann, A. (2021). Bakta: rapid and standardized annotation of bacterial genomes via alignment-free sequence identification. *Microbial Genomics*, 7(11). https://doi.org/10.1099/mgen.0.000685
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

@@ -2,7 +2,7 @@
 
 <!-- short: Platon 1.7: identification of plasmid contigs in bacterial assemblies. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Platon](https://github.com/oschwengers/platon) 1.7 for the identification and characterization of plasmid contigs in bacterial genome assemblies. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [Platon](https://github.com/oschwengers/platon) 1.7 for the identification and characterization of plasmid contigs in bacterial genome assemblies. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -74,6 +74,6 @@ Platon is distributed under the [GPL v3 licence](https://github.com/oschwengers/
 
 If you use Platon, please cite: Schwengers, O., et al. (2020). Platon: identification and characterization of bacterial plasmid contigs in short-read draft assemblies exploiting protein sequence-based replicon distribution scores. *Microbial Genomics*, 6(10). https://doi.org/10.1099/mgen.0.000398
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.

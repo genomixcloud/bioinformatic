@@ -2,7 +2,7 @@
 
 <!-- short: CheckM 1.2.5: completeness and contamination of genomes. Database included. -->
 
-Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [CheckM](https://github.com/Ecogenomics/CheckM) 1.2.5 for assessing the quality (completeness, contamination and strain heterogeneity) of genomes recovered from isolates, single cells and metagenomes. The CheckM reference database is included in the image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [Genomix Cloud](https://genomixcloud.com/) bioinformatic tools.
+Ready-to-run Linux (Ubuntu, `linux/amd64`) image of [CheckM](https://github.com/Ecogenomics/CheckM) 1.2.5 for assessing the quality (completeness, contamination and strain heterogeneity) of genomes recovered from isolates, single cells and metagenomes. The CheckM reference database is included in the image. It runs standalone on your computer or as a job in the AWS ecosystem. Part of the [GenomixCloud](https://genomixcloud.com/) bioinformatic tools.
 
 ## Tags
 
@@ -69,6 +69,6 @@ CheckM is distributed under the [GPL v3 licence](https://github.com/Ecogenomics/
 
 If you use CheckM, please cite: Parks, D. H., Imelfort, M., Skennerton, C. T., Hugenholtz, P., & Tyson, G. W. (2015). CheckM: assessing the quality of microbial genomes recovered from isolates, single cells, and metagenomes. *Genome Research*, 25(7), 1043–1055. https://doi.org/10.1101/gr.186072.114
 
-## What is Genomix Cloud?
+## What is GenomixCloud?
 
-[Genomix Cloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
+[GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
