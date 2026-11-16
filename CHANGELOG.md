@@ -4,9 +4,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### Added
-- Integration with external payment gateway.
-
 ## - 2026-11-11
 ### Published images
 All images were built from this repository, passed their smoke test (`make test`) and were pushed to Docker Hub as `genomixcloud/<tool>:latest`. Pull an exact image with `docker pull genomixcloud/<tool>@<digest>`.

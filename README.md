@@ -25,7 +25,7 @@
 
 [GenomixCloud](https://genomixcloud.com/) is a platform designed to provide researchers, biologists, geneticists, and other professionals in the field of genomics with a powerful suite of bioinformatics tools in the Cloud to analyze and interpret genomic data.
 
-This repository hosts the source code of the plain Docker images of the bioinformatic tools that are part of the Genomix Cloud platform. These images form the foundation of our suite of bioinformatic tools and support various genomic analysis tasks. You will find instructions on building the Docker images used in our workflows, and suggestions for improving performance and automation within the AWS ecosystem.
+This repository hosts the source code of the plain Docker images of the bioinformatic tools that are part of the GenomixCloud platform. These images form the foundation of our suite of bioinformatic tools and support various genomic analysis tasks. You will find instructions on building the Docker images used in our workflows, and suggestions for improving performance and automation within the AWS ecosystem.
 
 Please note that this repository is continuously evolving. See the [Manifest](Manifest.md) for the goals and roadmap of the project, and the [Changelog](CHANGELOG.md) for notable changes.
 
