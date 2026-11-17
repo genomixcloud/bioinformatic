@@ -1,0 +1,96 @@
+{
+  "view": "timeSeries",
+  "stacked": false,
+  "region": "eu-west-1",
+  "start": "2026-11-13T13:18:00Z",
+  "end": "2026-11-13T13:35:00Z",
+  "timezone": "+0000",
+  "title": "Kraken2 - CPUUtilization (average, 5 min)",
+  "stat": "Average",
+  "period": 300,
+  "metrics": [
+    [
+      "AWS/EC2",
+      "CPUUtilization",
+      "InstanceId",
+      "i-05dcd73d4cab124f5",
+      {
+        "label": "Sample_BB_S7"
+      }
+    ],
+    [
+      "AWS/EC2",
+      "CPUUtilization",
+      "InstanceId",
+      "i-03af2f62857655d64",
+      {
+        "label": "Sample_A4_S8"
+      }
+    ],
+    [
+      "AWS/EC2",
+      "CPUUtilization",
+      "InstanceId",
+      "i-0e40ae0063bb8ed3c",
+      {
+        "label": "Sample_A3_S11"
+      }
+    ],
+    [
+      "AWS/EC2",
+      "CPUUtilization",
+      "InstanceId",
+      "i-0a9b9340c95a31c35",
+      {
+        "label": "Sample_A2_S1"
+      }
+    ],
+    [
+      "AWS/EC2",
+      "CPUUtilization",
+      "InstanceId",
+      "i-0b9d8421ed2492e8e",
+      {
+        "label": "Sample_A1_S8"
+      }
+    ]
+  ],
+  "yAxis": {
+    "left": {
+      "min": 0,
+      "max": 100,
+      "label": "%"
+    }
+  },
+  "annotations": {
+    "vertical": [
+      [
+        {
+          "label": "Load: Sample_BB_S7 (alone until 13:23:38)",
+          "value": "2026-11-13T13:21:21Z"
+        },
+        {
+          "value": "2026-11-13T13:29:05Z"
+        }
+      ],
+      [
+        {
+          "label": "Load: Sample_A4_S8, Sample_A3_S11",
+          "value": "2026-11-13T13:23:41Z"
+        },
+        {
+          "value": "2026-11-13T13:29:54Z"
+        }
+      ],
+      [
+        {
+          "label": "Load: Sample_A2_S1, Sample_A1_S8",
+          "value": "2026-11-13T13:25:47Z"
+        },
+        {
+          "value": "2026-11-13T13:30:44Z"
+        }
+      ]
+    ]
+  }
+}
