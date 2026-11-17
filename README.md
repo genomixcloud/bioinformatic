@@ -51,7 +51,7 @@ Please note that this repository is continuously evolving. See the [Manifest](Ma
 
 ### Microbial genome pipeline
 
-![Microbial Genome Pipeline](assets/microbial_genome_pipeline.svg 'Microbial Genome Pipeline')
+![Microbial Genome Pipeline](assets/microbial_genome_pipeline_1.png 'Microbial Genome Pipeline')
 
 ## Repository structure
 
